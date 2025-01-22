@@ -1,9 +1,9 @@
 // UI folder Exports
-export {loader} from './ui/loader'
+export {Loader} from './UI/Loader'
 
 
 
 //Exporting Components
-export {error} from './error'
-export {searchBar} from './searchBar'
-export {sideBarItem} from './sideBarItem';
+export {Error} from './Error'
+export {SearchBar} from './SearchBar'
+export {SideBarItem} from './SideBarItem';
