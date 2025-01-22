@@ -1,7 +1,7 @@
 import { Input } from "@chakra-ui/react";
 import React from "react";
 
-export const searchBar = ({variant,placeholder, searchQuery, setSearchQuery, handleKeyDown, searchBarWidth}) => {
+export const SearchBar = ({variant,placeholder, searchQuery, setSearchQuery, handleKeyDown, searchBarWidth}) => {
   return (
     <div>
       <Input

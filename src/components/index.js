@@ -1,10 +1,12 @@
 // UI folder Exports
-export {loader} from './ui/loader'
+export {Loader} from './ui/loader'
 
 
 
 //Exporting Components
-export {error} from './error'
-export {searchBar} from './searchBar'
-export {sideBarItem} from './sideBarItem';
-export {checkBoxGroup} from './checkBoxGroup';
+export {Error} from './error'
+export {SearchBar} from './searchBar'
+export {SideBarItem} from './sideBarItem';
+export {CheckboxGroupComponent} from './checkBoxGroup';
+export {RadioGroupComponent} from './radioGroup';
+export {BadgeComponent} from './badge';
