@@ -5,7 +5,7 @@ import React from 'react'
 // will have api calls to the list of repos
 // will be sent to its child components
 // child - sidebar container, topBar container, mainBox container
-export const Home = () => {
+export const index = () => {
   return (
     <>
       This is home view
