@@ -1,15 +1,12 @@
 import { Box } from '@chakra-ui/react'
+import { Home } from './views'
 
 
 function App() {
-  const [count, setCount] = useState(0)
   
 
   return (
-    <Box>
-     Home Page
-    </Box>
-    
+    <Home />
   )
 }
 
