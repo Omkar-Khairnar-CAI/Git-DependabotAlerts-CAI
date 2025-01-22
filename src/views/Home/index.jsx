@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import React from 'react'
 
 
@@ -7,9 +8,9 @@ import React from 'react'
 // child - sidebar container, topBar container, mainBox container
 export const index = () => {
   return (
-    <>
+    <Box>
       This is home view
-    </>
+    </Box>
   )
 }
 
