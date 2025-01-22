@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckboxGroup, HStack, Checkbox, Box } from "@chakra-ui/react";
 
-export const CheckboxGroupComponent = ({
+export const checkboxGroup = ({
   label,
   options,
   value,

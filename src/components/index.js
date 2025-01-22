@@ -7,3 +7,4 @@ export {loader} from './ui/loader'
 export {error} from './error'
 export {searchBar} from './searchBar'
 export {sideBarItem} from './sideBarItem';
+export {checkBoxGroup} from './checkBoxGroup';
