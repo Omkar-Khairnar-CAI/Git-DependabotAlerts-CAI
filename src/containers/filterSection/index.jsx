@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     Box,
     HStack,
@@ -8,13 +8,13 @@ import {
 import {SearchBar} from '../../components/index'
 import {Filters} from '../index'
 
-export const FilterSection = ({getAlertsData, modifyQueryParams}) => {
+export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBasedOnSearchQuery}) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedSeverity, setSelectedSeverity] = useState([]);
     const [selectedState, setSelectedState] = useState([]);
     const [selectedEcosystem, setSelectedEcosystem] = useState([]);
     const [selectedScope, setSelectedScope] = useState([]);
-    const [sortOrder, setSortOrder] = useState("asc");
+    const [sortOrder, setSortOrder] = useState("desc");
 
      const searchBarWidth = useBreakpointValue({
         base: "65vw",
@@ -24,10 +24,6 @@ export const FilterSection = ({getAlertsData, modifyQueryParams}) => {
     
       const constructParams = () => {
         const queryParams = {}; 
-      
-        if (searchQuery) {
-          queryParams.q = searchQuery;
-        }
         if (selectedSeverity.length > 0) {
           queryParams.severity = selectedSeverity.join(',');
         }
@@ -41,7 +37,7 @@ export const FilterSection = ({getAlertsData, modifyQueryParams}) => {
           queryParams.scope = selectedScope.join(',');
         }
         if (sortOrder) {
-          queryParams.sort_order = sortOrder;
+          queryParams.direction = sortOrder;
         }
         return queryParams; 
       };
@@ -49,14 +45,22 @@ export const FilterSection = ({getAlertsData, modifyQueryParams}) => {
       const filterResults = async() => {
         const queryParams = constructParams();
         modifyQueryParams(queryParams);
-        await getAlertsData();
+        await getAlertsData(1);
       };
     
-      const handleKeyDown = (e) => {
-        if (e.key == "Enter") {
-          filterResults();
-        }
-      };
+      const debouncedFilterResults = useCallback(() => {
+        const handler = setTimeout(() => {
+          filterResultsBasedOnSearchQuery(searchQuery);
+        }, 300); 
+    
+        return () => {
+          clearTimeout(handler);
+        };
+      }, [searchQuery]);
+    
+      useEffect(() => {
+        debouncedFilterResults();
+      }, [searchQuery]);
   return (
     <Box bgColor='white'>
        <HStack className="search-filter" spacing={2} >
@@ -64,7 +68,6 @@ export const FilterSection = ({getAlertsData, modifyQueryParams}) => {
             placeholder={"Search by Summary..."}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            handleKeyDown={handleKeyDown}
             searchBarWidth={searchBarWidth}
           />
 

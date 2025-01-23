@@ -26,18 +26,7 @@ const getData = async ({ endpoint, params = {}, headers = {}, method = "GET" }) 
     return { error: true, msg: error.message || "Unexpected error occurred" };
   }
 };
-const fetchFilterOptions = async () => {
-  const { error, data } = await getData({ endpoint: "filters/options" });
-  console.log({error:error, data:data});
-  if (!error) {
-    return data; // Expected to return an object like { severity: [...], state: [...], ... }
-  } else {
-    console.error("Failed to fetch filter options:", data.msg);
-    return {};
-  }
-};
 
 
-  // fetchFilterOptions();
 
 export default getData;

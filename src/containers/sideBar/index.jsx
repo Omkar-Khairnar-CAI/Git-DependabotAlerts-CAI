@@ -1,4 +1,4 @@
-import { Box, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Text, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SearchBar, SideBarItem } from "../../components/index";
 import getGitData from "../../utils/getGitData";
@@ -14,9 +14,8 @@ export const SideBar = ({
 }) => {
   const [filteredRepos, setFilteredRepos] = useState([]);
   const [repos, setRepos] = useState([]);
-
   const [searchtext, setSearchtext] = useState("");
-
+  const theme = useTheme();
   const sideBarWidth = useBreakpointValue({
     base: "60%",
     md: "33%",
@@ -24,10 +23,9 @@ export const SideBar = ({
   });
   const sideBarTopMargin = useBreakpointValue({ base: "0", md: "3", lg: "-1" });
 
+
   const getUserRepos = async () => {
-    const res = await getGitData({ endpoint: `users/${GITHUB_OWNER}/repos` });
-    console.log(res);
-    
+    const res = await getGitData({ endpoint: `users/${GITHUB_OWNER}/repos` });    
     setRepos(res.data);
     setFilteredRepos(res.data);
     setCurrentActiveRepo(res.data.length > 0 ? res.data[0].name : "");
@@ -72,7 +70,7 @@ export const SideBar = ({
 
   return (
     <Box
-      bg="#F4F1EB "
+      bg="colors.sideBar.main"
       color="black"
       height={"100%"}
       width={sideBarWidth}

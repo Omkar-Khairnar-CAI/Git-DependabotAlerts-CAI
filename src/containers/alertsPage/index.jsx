@@ -8,8 +8,7 @@ export const AlertsPage = ({ filteredData }) => {
       {filteredData.length > 0 ? (
         filteredData.map((alert, index) => (
           <Box key={index} mb={3} m={"4"}>
-            <AlertCard  alert={alert} />  
-            
+            <AlertCard  alert={alert} />
           </Box>
         ))
       ) : (
