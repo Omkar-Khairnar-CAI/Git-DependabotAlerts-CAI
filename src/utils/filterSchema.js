@@ -45,13 +45,7 @@ export const filterSchema = [
       colorScheme: "orange",
       stateHandler: "sortOrder",
     },
-    // {
-    //   label: "Page Size",
-    //   type: "radio",
-    //   options: ["10", "20", "50"],
-    //   colorScheme: "orange",
-    //   stateHandler: "pageSize",
-    // },
+    
   ];
 
  

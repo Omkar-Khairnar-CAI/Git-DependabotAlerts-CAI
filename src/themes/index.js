@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import foundations from "./foundations";
 
 
 const config = {
@@ -13,6 +14,7 @@ const fonts = {
 
 export const theme = extendTheme({
   config,
+  ...foundations,
   fonts,
 });
 
