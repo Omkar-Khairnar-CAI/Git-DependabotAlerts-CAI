@@ -4,7 +4,6 @@ import { SearchBar, SideBarItem } from "../../components/index";
 import getGitData from "../../utils/getGitData";
 const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER;
 
-
 // this is the complete left side view box
 export const SideBar = ({
   isSidebarOpen,
@@ -23,9 +22,8 @@ export const SideBar = ({
   });
   const sideBarTopMargin = useBreakpointValue({ base: "0", md: "3", lg: "-1" });
 
-
   const getUserRepos = async () => {
-    const res = await getGitData({ endpoint: `users/${GITHUB_OWNER}/repos` });    
+    const res = await getGitData({ endpoint: `users/${GITHUB_OWNER}/repos` });
     setRepos(res.data);
     setFilteredRepos(res.data);
     setCurrentActiveRepo(res.data.length > 0 ? res.data[0].name : "");
@@ -107,7 +105,7 @@ export const SideBar = ({
           },
         }}
       >
-        {filteredRepos &&
+        {filteredRepos.length > 0 ? (
           filteredRepos.map((repo, key) => {
             return (
               <Box key={key}>
@@ -118,7 +116,37 @@ export const SideBar = ({
                 />
               </Box>
             );
-          })}
+          })
+        ) : (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            height="100%"
+            color="gray.600"
+            textAlign="center"
+          >
+            <Box
+              bg="white"
+              p={4}
+              borderRadius="md"
+              boxShadow="sm"
+              width="80%"
+              maxWidth="300px"
+              textAlign="center"
+            >
+              <Text fontSize="lg" fontWeight="bold" mb={2}>
+                No Repositories Found
+              </Text>
+              <Text fontSize="sm" mb={4}>
+                Your search didn’t match any repositories. Try refining your
+                search query.
+              </Text>
+              
+            </Box>
+          </Box>
+        )}
       </Box>
     </Box>
   );

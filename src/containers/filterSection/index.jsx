@@ -8,13 +8,13 @@ import {
 import {SearchBar} from '../../components/index'
 import {Filters} from '../index'
 
+import { initialFiltersValues } from "../../utils/filterSchema";
+
+
 export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBasedOnSearchQuery}) => {
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedSeverity, setSelectedSeverity] = useState([]);
-    const [selectedState, setSelectedState] = useState([]);
-    const [selectedEcosystem, setSelectedEcosystem] = useState([]);
-    const [selectedScope, setSelectedScope] = useState([]);
-    const [sortOrder, setSortOrder] = useState("desc");
+    const [filters, setFilters] = useState(initialFiltersValues);
+   
 
      const searchBarWidth = useBreakpointValue({
         base: "65vw",
@@ -22,30 +22,25 @@ export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBa
         lg: "68vw",
       });
     
-      const constructParams = () => {
+      const constructParams = (tempFilters) => {
         const queryParams = {}; 
-        if (selectedSeverity.length > 0) {
-          queryParams.severity = selectedSeverity.join(',');
-        }
-        if (selectedState.length > 0) {
-          queryParams.state = selectedState.join(',');
-        }
-        if (selectedEcosystem.length > 0) {
-          queryParams.ecosystem = selectedEcosystem.join(',');
-        }
-        if (selectedScope.length > 0) {
-          queryParams.scope = selectedScope.join(',');
-        }
-        if (sortOrder) {
-          queryParams.direction = sortOrder;
-        }
+
+        Object.keys(tempFilters).forEach((key) => {
+          if(key === 'direction'){
+            queryParams[key] = tempFilters[key];
+          }
+          else if (tempFilters[key].length > 0) {
+            queryParams[key] = tempFilters[key].join(',');
+          }
+        })
+        console.log(queryParams);
+        
         return queryParams; 
       };
 
-      const filterResults = async() => {
-        const queryParams = constructParams();
+      const filterResults = async(tempFilters) => {
+        const queryParams = constructParams(tempFilters);        
         modifyQueryParams(queryParams);
-        await getAlertsData(1);
       };
     
       const debouncedFilterResults = useCallback(() => {
@@ -61,6 +56,11 @@ export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBa
       useEffect(() => {
         debouncedFilterResults();
       }, [searchQuery]);
+
+      useEffect(()=>{
+        console.log(filters);
+      },[filters])
+     
   return (
     <Box bgColor='white'>
        <HStack className="search-filter" spacing={2} >
@@ -71,16 +71,9 @@ export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBa
             searchBarWidth={searchBarWidth}
           />
 
-          <Filters selectedSeverity={selectedSeverity}
-            setSelectedSeverity={setSelectedSeverity}
-            selectedState={selectedState}
-            setSelectedState={setSelectedState}
-            selectedEcosystem={selectedEcosystem}
-            setSelectedEcosystem={setSelectedEcosystem}
-            selectedScope={selectedScope}
-            setSelectedScope={setSelectedScope}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
+          <Filters 
+            filters={filters}
+            setFilters={setFilters}
             filterResults={filterResults}
           />
         </HStack>

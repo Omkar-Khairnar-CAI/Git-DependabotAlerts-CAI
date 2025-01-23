@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,35 +13,22 @@ import { CheckboxGroupComponent } from "../../components/index";
 import { RadioGroupComponent } from "../../components/index";
 
 export const Filters = ({
-  selectedSeverity,
-  setSelectedSeverity,
-  selectedState,
-  setSelectedState,
-  selectedEcosystem,
-  setSelectedEcosystem,
-  selectedScope,
-  setSelectedScope,
-  sortOrder,
-  setSortOrder,
+  filters, 
+  setFilters,
   filterResults,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tempFilters, setTempFilters] = useState(filters);
 
-  const stateHandlers = {
-    selectedSeverity,
-    setSelectedSeverity,
-    selectedState,
-    setSelectedState,
-    selectedEcosystem,
-    setSelectedEcosystem,
-    selectedScope,
-    setSelectedScope,
-    sortOrder,
-    setSortOrder,
-  };
+  useEffect(() => {
+    if (!menuOpen) {
+      setTempFilters(filters);
+    }
+  }, [filters, menuOpen]);
 
   const handleApplyChanges = () => {
-    filterResults();
+    setFilters(tempFilters);
+    filterResults(tempFilters);
     setMenuOpen(false);
   };
 
@@ -59,14 +46,15 @@ export const Filters = ({
           <Box p={5}>
             <VStack align="start">
               {filterSchema.map((filter) => {
-                const handlerName = `set${filter.stateHandler.charAt(0).toUpperCase() + filter.stateHandler.slice(1)}`;
                 return filter.type === "checkbox" ? (
                   <CheckboxGroupComponent
                     key={filter.label}
                     label={filter.label}
                     options={filter.options}
-                    value={stateHandlers[filter.stateHandler]}
-                    onChange={(values) => stateHandlers[handlerName](values)}
+                    value={tempFilters[filter.key]}
+                    onChange={(values) => {
+                      setTempFilters({ ...tempFilters, [filter.key]: values });
+                    }}
                     colorScheme={filter.colorScheme}
                   />
                 ) : (
@@ -74,14 +62,21 @@ export const Filters = ({
                     key={filter.label}
                     label={filter.label}
                     options={filter.options}
-                    value={stateHandlers[filter.stateHandler]}
-                    onChange={(e) => stateHandlers[handlerName](e)}
+                    value={tempFilters[filter.key]}
+                    onChange={(value) =>
+                      setTempFilters({ ...tempFilters, [filter.key]: value })
+                    }
                     colorScheme={filter.colorScheme}
                   />
                 );
               })}
               <Box position={"absolute"} right={10} bottom={7}>
-                <Button colorScheme="black" variant="outline"  _hover={{bg:'#9f6d4d', color:'white'}} onClick={handleApplyChanges}>
+                <Button
+                  colorScheme="black"
+                  variant="outline"
+                  _hover={{ bg: "#9f6d4d", color: "white" }}
+                  onClick={handleApplyChanges}
+                >
                   Apply
                 </Button>
               </Box>
