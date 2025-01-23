@@ -15,7 +15,7 @@ export const MainBox = ({ REPO_NAME }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isError, setIsError] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState({msg: "", statusCode:''});
   const [hasMoreContent, setHasMoreContent] = useState(true);
 
   const observerRef = useRef(null); 
@@ -40,7 +40,7 @@ export const MainBox = ({ REPO_NAME }) => {
 
         if (alerts.error) {
           setIsError(true);
-          setError(alerts.msg);
+          setError({msg: alerts.msg, statusCode: alerts.statusCode});
         } else {
           const currData = alerts.data;
           setData((prevData) =>
@@ -52,11 +52,12 @@ export const MainBox = ({ REPO_NAME }) => {
 
           setHasMoreContent(currData.length === pageSize);
           setIsError(false);
+          setError({msg: '', statusCode: ''})
         }
       }
     } catch (error) {
       setIsError(true);
-      setError(error.message);
+      setError({msg: error.message, statusCode: error.status});
     } finally {
       setIsLoading(false);
     }
@@ -131,7 +132,7 @@ export const MainBox = ({ REPO_NAME }) => {
 
         <GridItem>
           {isError ? (
-            <Error message={error} />
+            <Error message={error.msg} statusCode={error.statusCode}/>
           ) : (
             <>
               <AlertsPage filteredData={filteredData} />

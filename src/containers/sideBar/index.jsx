@@ -70,7 +70,7 @@ export const SideBar = ({
 
   return (
     <Box
-      bg="colors.sideBar.main"
+      bg="#F4F1EB"
       color="black"
       height={"100%"}
       width={sideBarWidth}
