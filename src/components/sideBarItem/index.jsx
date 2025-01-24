@@ -10,6 +10,7 @@ export const SideBarItem = ({ repo, currentActiveRepo, handleItemClick }) => {
         bg={currentActiveRepo === repo.name ? "#8f6d4d" : ""}
         onClick={() => handleItemClick(repo)}
         borderRadius="md"
+        textOverflow="ellipsis"
         boxShadow={currentActiveRepo === repo.name ? "lg" : "sm"}
         color={currentActiveRepo === repo.name ? "white" : "black"}
         _hover={{

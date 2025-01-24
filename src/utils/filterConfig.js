@@ -6,7 +6,7 @@ const STATE_OPTIONS = ['open', 'fixed', 'dismissed', 'auto_dismissed'];
 
 export const filterConfig = [
    {
-    key : 'severities',
+    key : 'severity',
     path: 'security_advisory.severity',
     label: 'Severity',
     enabled: true,
@@ -14,7 +14,7 @@ export const filterConfig = [
     options: SEVERITY_OPTIONS
   },
   {
-    key : 'ecosystems',
+    key : 'ecosystem',
     path: 'dependency.package.ecosystem',
     label: 'Ecosystem',
     enabled: true,
@@ -22,7 +22,7 @@ export const filterConfig = [
     options: ECOSYSTEM_OPTIONS
   },
   {
-    key : 'scopes',
+    key : 'scope',
     path: 'dependency.scope',
     label: 'Scope',
     enabled: true,
@@ -30,7 +30,7 @@ export const filterConfig = [
     options: SCOPE_OPTIONS
   },
   {
-    key : 'states',
+    key : 'state',
     path: 'state',
     label: 'State',
     enabled: true,

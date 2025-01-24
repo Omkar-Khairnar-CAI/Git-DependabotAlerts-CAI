@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Flex, Button, Text } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-import { AlertTable, DetailsModal, TimelineModal, FilterModal} from '../../components/index';
+import { AlertTable, DetailsModal, TimelineModal, FilterModal } from '../../components/index';
 import { filterConfig } from '../../utils/filterConfig';
 import { SummaryAndDescpModal } from '../../components/summaryAndDescpModal';
 import getData from '../../utils/getGitData';
 
-const VITE_GITHUB_REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER
-const VITE_GITHUB_REPO_NAME = import.meta.env.VITE_GITHUB_REPO
-export const MiniAlertContainer = () => {
+const VITE_GITHUB_REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER;
+const VITE_GITHUB_REPO_NAME = import.meta.env.VITE_GITHUB_REPO;
 
-  // based on key property, filterstates wll be formed if enabled -> severities: [], package_names: [], etc
+export const MiniAlertContainer = ({ REPO_NAME }) => {
   const getInitialFilterState = () =>
     filterConfig
       .filter(config => config.enabled)
@@ -25,26 +24,20 @@ export const MiniAlertContainer = () => {
   const [loading, setLoading] = useState(true);
   const [pageNum, setPageNum] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [lastElement, setLastElement] = useState(null);
-
-  // Modals ------------------------------------>
+  
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isTimelineOpen, setIsTimelineOpen] = useState(false);
   const [isMetaDataOpen, setIsMetaDataOpen] = useState(false);
   const [isDismissedOpen, setIsDismissedOpen] = useState(false);
   const [isSummandDescpOpen, setIsSSummandDescpOpen] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState(null);
-
-  // filter states ------------------------------------------->
-
-  // Add back tempFilters state
+  
   const [tempFilters, setTempFilters] = useState(getInitialFilterState());
   const [appliedFilters, setAppliedFilters] = useState(getInitialFilterState());
-
-  // overallFilterOptions -> initial filter options based on filterConfig
-  const [overallFilterOptions] = useState(getStaticFilterOptions()); // No need for setter as options are static
-
-  // intersection observer ----------------------------------------->
+  
+  const [overallFilterOptions] = useState(getStaticFilterOptions());
+  
+  const [lastElement, setLastElement] = useState(null);
   const observer = useRef(
     new IntersectionObserver((entries) => {
       const first = entries[0];
@@ -53,6 +46,7 @@ export const MiniAlertContainer = () => {
       }
     })
   );
+
   useEffect(() => {
     const currentElement = lastElement;
     const currentObserver = observer.current;
@@ -68,35 +62,22 @@ export const MiniAlertContainer = () => {
     };
   }, [lastElement]);
 
-
-  //fetching (normal alerts) || (filtered alerts based on filter options) - triggered appliedFilters or pageNum changes
   useEffect(() => {
     fetchAlerts(appliedFilters, pageNum);
-  }, [pageNum, appliedFilters]);
+  }, [pageNum, appliedFilters, REPO_NAME]);
 
-  // fetching alerts based on applied filters (intially no filters)
   const fetchAlerts = async (filters = {}, page = 1) => {
     setLoading(true);
     try {
-      console.log("fecthing alerts based on these filters" , filters)
-      const formattedFilters = Object.entries(filters)
-        .filter(([_, value]) => value?.length) // Only filter based on if values are selected
-        .reduce((acc, [key, value]) => {
-          const config = filterConfig.find(c => c.key === key);
-          return {
-            ...acc,
-            [config.apiParam]: value.join(',')
-          };
-        }, {});
-  
+      console.log("Fetching alerts with filters:", filters);
       const params = {
         page,
         per_page: 10,
-        ...formattedFilters
+        ...filters
       };
-      const endpoint = `repos/${VITE_GITHUB_REPO_OWNER}/${VITE_GITHUB_REPO_NAME}/dependabot/alerts`;
-    
-      const { error, data } = await getData({ 
+      const endpoint = `repos/${VITE_GITHUB_REPO_OWNER}/${REPO_NAME}/dependabot/alerts`;
+
+      const alerts = await getData({
         endpoint,
         params,
         headers: {
@@ -104,20 +85,18 @@ export const MiniAlertContainer = () => {
           "X-GitHub-Api-Version": "2022-11-28"
         }
       });
-  
-      if (error) {
-        throw new Error(data.msg);
+
+      if (alerts.error) {
+        throw new Error(alerts.msg);
       }
 
       if (page === 1) {
-        // setAlerts(data);
-        setFilteredAlerts(data);
+        setFilteredAlerts(alerts.data);
       } else {
-        // setAlerts(prev => [...prev, ...data]);
-        setFilteredAlerts(prev => [...prev, ...data]);
+        setFilteredAlerts(prev => [...prev, ...alerts.data]);
       }
 
-      setHasMore(data.length > 0);
+      setHasMore(alerts.data.length > 0);
     } catch (error) {
       console.error("Error fetching alerts:", error);
     } finally {
@@ -125,14 +104,8 @@ export const MiniAlertContainer = () => {
     }
   };
 
-  const getValueFromPath = (object, path) => {
-    return path.split('.').reduce((acc, key) => acc?.[key], object);
-  };
-  
-  //affects both tempFilters and appliedFilters -back to beginning
   const resetFilters = () => {
     const resetState = getInitialFilterState();
-    // setAppliedFilters(resetState);
     setTempFilters(resetState);
     setPageNum(1);
     setHasMore(true);
@@ -177,13 +150,10 @@ export const MiniAlertContainer = () => {
 
       <AlertTable 
         loading={loading}
-        // observer
         pageNum={pageNum}
         setLastElement={setLastElement}
-        // for alert based modal
         alerts={filteredAlerts} 
         setSelectedAlert={setSelectedAlert}
-        // modals
         setIsMetaDataOpen={setIsMetaDataOpen}
         setIsTimelineOpen={setIsTimelineOpen}
         setIsDismissedOpen={setIsDismissedOpen}

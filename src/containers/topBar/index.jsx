@@ -1,11 +1,11 @@
 import React from 'react'
-import { Box, IconButton, Text, Icon } from "@chakra-ui/react";
+import { Box, IconButton, Text, Icon, Switch, Flex } from "@chakra-ui/react";
 import { GithubIcon } from "../../assets/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 
 // this is the complete top box - contains heading 
-export const TopBar = ({ handleSideBarToggle, isSidebarOpen }) => {
+export const TopBar = ({ handleSideBarToggle, isSidebarOpen, handleViewToggle }) => {
   const onToggle = () =>{
     handleSideBarToggle();
   }
@@ -20,7 +20,7 @@ export const TopBar = ({ handleSideBarToggle, isSidebarOpen }) => {
       p={4}
       display="flex"
       alignItems="center"
-      boxShadow={'2xl'}
+      boxShadow={'xl'}
        
     >
       <IconButton
@@ -32,19 +32,27 @@ export const TopBar = ({ handleSideBarToggle, isSidebarOpen }) => {
         color={'white'}
         mr={4}
       />
-
-      <Icon as={GithubIcon} boxSize={5} mr={2} color={'white'}/>
+    
+    <Flex w={"100%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
       
       <Text
         as="h2"
         fontSize="lg"
         fontWeight="bold"
-        display="inline"
+        display="flex"
         color='white'
         mt={0}
-      >
+        alignItems={"center"}
+        >
+        <Icon as={GithubIcon} boxSize={5} mr={2} color={'white'}/>
         Dependabot Alerts
       </Text>
+
+
+      <Switch onChange={() => handleViewToggle()}/>
+
+      </Flex>
+
     </Box>
   )
 }

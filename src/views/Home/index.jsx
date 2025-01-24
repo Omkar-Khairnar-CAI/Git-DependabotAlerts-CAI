@@ -9,6 +9,7 @@ import { TopBar, SideBar, MainBox , AlertsContainer} from "../../containers/inde
 export const Home = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentActiveRepo, setCurrentActiveRepo] = useState("");
+  const [toggleView, setToggleView] = useState(false) // false means miniview
   const marginLeft = useBreakpointValue({ base: "1%", md: "31%", lg: "19%" });
   const paddingMainComponent = useBreakpointValue({
     base: "2",
@@ -18,11 +19,19 @@ export const Home = () => {
   const handleSideBarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const handleToggleView = () => {
+      console.log("switch clicked ---------")
+      console.log("before", toggleView)
+     setToggleView(!toggleView);
+     console.log("after", toggleView);
+  }
   return (
     <Box>
       <TopBar
         handleSideBarToggle={handleSideBarToggle}
         isSidebarOpen={isSidebarOpen}
+        viewToggle={toggleView}
+        handleViewToggle={handleToggleView}
       />
       <SideBar
         isSidebarOpen={isSidebarOpen}
@@ -31,9 +40,9 @@ export const Home = () => {
         handleSideBarToggle={handleSideBarToggle}
       />
 
-      <Box ml={marginLeft} p={paddingMainComponent}>
-        <MainBox REPO_NAME={currentActiveRepo}></MainBox>
-        <AlertsContainer/>
+      <Box ml={marginLeft} p={paddingMainComponent} mt={6}>
+            <MainBox REPO_NAME={currentActiveRepo}></MainBox>
+        }
       </Box>
     </Box>
   );
