@@ -1,9 +1,18 @@
 // UI folder Exports
-export {loader} from './ui/loader'
+export {Loader} from './ui/loader'
 
 
 
 //Exporting Components
-export {error} from './error'
-export {searchBar} from './searchBar'
-export {sideBarItem} from './sideBarItem';
+export {Error} from './error'
+export {SearchBar} from './searchBar'
+export {SideBarItem} from './sideBarItem';
+
+export {AlertTable} from './alertTable'
+export {DetailsModal} from './detailsModal'
+export {TimelineModal} from './timelineModal'
+export {SummaryAndDescpModal} from './summaryAndDescpModal'
+export {FilterModalComponent} from './filterModalComponent'
+export {FilterModal} from './filterModal'
+export {AlertTableButton} from './alertTableButton'
+// export {DismissedModal} from './dismissedModal'

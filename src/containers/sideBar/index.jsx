@@ -3,7 +3,7 @@ import React from 'react'
 
 
 // this is the complete left side view box
-export const index = () => {
+export const SideBar = () => {
   return (
     <Box>
       <Text>SideBar</Text>
