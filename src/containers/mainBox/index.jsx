@@ -15,10 +15,10 @@ export const MainBox = ({ REPO_NAME }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isError, setIsError] = useState(false);
-  const [error, setError] = useState({msg: "", statusCode:''});
+  const [error, setError] = useState({ msg: "", statusCode: "" });
   const [hasMoreContent, setHasMoreContent] = useState(true);
 
-  const observerRef = useRef(null); 
+  const observerRef = useRef(null);
 
   const modifyQueryParams = (newParams) => {
     setQueryParams(newParams);
@@ -32,7 +32,11 @@ export const MainBox = ({ REPO_NAME }) => {
     try {
       if (REPO_NAME) {
         setIsLoading(true);
-        const params = { ...queryParams, per_page: pageSize, page: currentPage };
+        const params = {
+          ...queryParams,
+          per_page: pageSize,
+          page: currentPage,
+        };
         const alerts = await getGitData({
           endpoint: `repos/${GITHUB_OWNER}/${REPO_NAME}/dependabot/alerts`,
           params,
@@ -40,7 +44,7 @@ export const MainBox = ({ REPO_NAME }) => {
 
         if (alerts.error) {
           setIsError(true);
-          setError({msg: alerts.msg, statusCode: alerts.statusCode});
+          setError({ msg: alerts.msg, statusCode: alerts.statusCode });
         } else {
           const currData = alerts.data;
           setData((prevData) =>
@@ -52,12 +56,12 @@ export const MainBox = ({ REPO_NAME }) => {
 
           setHasMoreContent(currData.length === pageSize);
           setIsError(false);
-          setError({msg: '', statusCode: ''})
+          setError({ msg: "", statusCode: "" });
         }
       }
     } catch (error) {
       setIsError(true);
-      setError({msg: error.message, statusCode: error.status});
+      setError({ msg: error.message, statusCode: error.status });
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +87,7 @@ export const MainBox = ({ REPO_NAME }) => {
     setHasMoreContent(true);
     window.scrollTo({
       top: 0,
-      behavior: "smooth", 
+      behavior: "smooth",
     });
     getAlertsData(1);
   }, [REPO_NAME, queryParams]);
@@ -95,7 +99,7 @@ export const MainBox = ({ REPO_NAME }) => {
   }, [page]);
 
   useEffect(() => {
-    if (observerRef.current) observerRef.current.disconnect(); 
+    if (observerRef.current) observerRef.current.disconnect();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -111,40 +115,44 @@ export const MainBox = ({ REPO_NAME }) => {
       observer.observe(target);
     }
 
-    observerRef.current = observer; 
+    observerRef.current = observer;
 
     return () => {
-      if (observerRef.current) observerRef.current.disconnect(); 
+      if (observerRef.current) observerRef.current.disconnect();
     };
   }, [hasMoreContent, isLoading]);
 
   return (
     <Box p={2} mt={"20px"}>
       <Grid templateRows="auto 1fr" gap={3}>
-        <GridItem height={"22px"} position="sticky" top={"8%"} bg={"white"}></GridItem>
+        <GridItem
+          height={"22px"}
+          position="sticky"
+          top={"8%"}
+          bg={"white"}
+        ></GridItem>
         <GridItem position="sticky" top={"10%"}>
           <FilterSection
             modifyQueryParams={modifyQueryParams}
-            getAlertsData={getAlertsData}
             filterResultsBasedOnSearchQuery={filterResultsBasedOnSearchQuery}
           />
         </GridItem>
 
         <GridItem>
           {isError ? (
-            <Error message={error.msg} statusCode={error.statusCode}/>
+            <Error message={error.msg} statusCode={error.statusCode} />
           ) : (
             <>
-              <AlertsPage filteredData={filteredData} />
-              {isLoading && <Loader />}
-              <div
-                id="observer-target"
-                style={{
-                  height: "1px",
-                  visibility: "hidden",
-                }}
-              ></div>
-            </>
+            <AlertsPage filteredData={filteredData} isLoading={isLoading}/>
+            {isLoading && <Loader />}
+            <div
+              id="observer-target"
+              style={{
+                height: "1px",
+                visibility: "hidden",
+              }}
+            ></div>
+          </>
           )}
         </GridItem>
       </Grid>
