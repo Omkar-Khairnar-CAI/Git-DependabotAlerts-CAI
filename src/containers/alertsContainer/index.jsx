@@ -1,10 +1,13 @@
 import { Box } from '@chakra-ui/react'
 import React from 'react'
+import { MiniAlertContainer } from '../index'
 
 export const AlertsContainer = () => {
+  // should have conditional rendering for different types - [minimalistic view and expanded view]
   return (
-    <Box>
-      Alerts container .. will use to display alerts
-    </Box>
+    <>
+      {/* minimalistic view of container component */}
+      <MiniAlertContainer/>
+    </>
   )
 }
