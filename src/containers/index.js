@@ -6,6 +6,5 @@ export {FilterSection} from './filterSection';
 export {ModalLayout} from './modalLayout';
 export {AlertsContainer} from './alertsContainer';
 export {MiniAlertContainer} from './miniAlertContainer';
-export {AlertsContainer} from './alertsContainer';
 export {AlertsPage} from './alertsPage';
 export {AlertCard} from './alertCard';

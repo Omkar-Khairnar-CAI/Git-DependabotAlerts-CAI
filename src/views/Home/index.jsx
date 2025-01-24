@@ -1,6 +1,3 @@
-import React from 'react'
-import { AlertsContainer } from '../../containers/index'
-
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { TopBar, SideBar, MainBox , AlertsContainer} from "../../containers/index";
