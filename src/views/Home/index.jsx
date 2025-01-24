@@ -2,13 +2,11 @@ import { Box, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { TopBar, SideBar, MainBox } from "../../containers/index";
 
-// Home view
-// will have api calls to the list of repos
-// will be sent to its child components
-// child - sidebar container, topBar container, mainBox container
+
 export const Home = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentActiveRepo, setCurrentActiveRepo] = useState("");
+  const [isToggled, setIsToggled] = useState(false);
   const marginLeft = useBreakpointValue({ base: "1%", md: "31%", lg: "19%" });
   const paddingMainComponent = useBreakpointValue({
     base: "2",
@@ -20,9 +18,11 @@ export const Home = () => {
   };
   return (
     <Box>
-      <TopBar
+      <TopBar 
         handleSideBarToggle={handleSideBarToggle}
         isSidebarOpen={isSidebarOpen}
+        isToggled={isToggled}
+        setIsToggled={setIsToggled}
       />
       <SideBar
         isSidebarOpen={isSidebarOpen}
@@ -32,8 +32,7 @@ export const Home = () => {
       />
 
       <Box ml={marginLeft} p={paddingMainComponent}>
-        <MainBox REPO_NAME={currentActiveRepo}></MainBox>
-        {/* <AlertsContainer/> */}
+        <MainBox REPO_NAME={currentActiveRepo} isToggled={isToggled}></MainBox>
       </Box>
     </Box>
   );

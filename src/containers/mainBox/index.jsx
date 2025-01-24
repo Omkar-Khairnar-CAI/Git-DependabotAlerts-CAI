@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import getGitData from "../../utils/getGitData";
 import { Loader, Error } from "../../components/index";
-import { FilterSection, TempContainer } from "../index";
+import { FilterSection, MinimalisticView } from "../index";
 import { AlertsPage } from "../index";
 
 const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER;
 
-export const MainBox = ({ REPO_NAME }) => {
+export const MainBox = ({ REPO_NAME, isToggled }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [queryParams, setQueryParams] = useState({});
@@ -148,14 +148,19 @@ export const MainBox = ({ REPO_NAME }) => {
             <Error message={error.msg} statusCode={error.statusCode} />
           ) : (
             <>
-              {/* <AlertsPage
-                filteredData={filteredData}
-                isLoading={isLoading}
-                setLastElement={(node) => (lastElementRef.current = node)}
-              /> */}
-              <TempContainer filteredData={filteredData}
-                isLoading={isLoading}
-                setLastElement={(node) => (lastElementRef.current = node)}/>
+              {isToggled ? (
+                <AlertsPage
+                  filteredData={filteredData}
+                  isLoading={isLoading}
+                  setLastElement={(node) => (lastElementRef.current = node)}
+                />
+              ) : (
+                <MinimalisticView
+                  filteredData={filteredData}
+                  isLoading={isLoading}
+                  setLastElement={(node) => (lastElementRef.current = node)}
+                />
+              )}
               {isLoading && <Loader />}
             </>
           )}

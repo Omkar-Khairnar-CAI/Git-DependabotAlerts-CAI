@@ -1,11 +1,12 @@
 import React from 'react'
-import { Box, IconButton, Text, Icon } from "@chakra-ui/react";
+import { Box, IconButton, Text, Icon, Flex } from "@chakra-ui/react";
 import { GithubIcon } from "../../assets/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { ToggleButton } from '../../components/index';
 
 
 // this is the complete top box - contains heading 
-export const TopBar = ({ handleSideBarToggle, isSidebarOpen }) => {
+export const TopBar = ({ handleSideBarToggle, isSidebarOpen, isToggled, setIsToggled }) => {
   const onToggle = () =>{
     handleSideBarToggle();
   }
@@ -32,19 +33,27 @@ export const TopBar = ({ handleSideBarToggle, isSidebarOpen }) => {
         color={'white'}
         mr={4}
       />
+      <Flex justifyContent="space-between" alignItems="center"   width={'100%'}>
 
-      <Icon as={GithubIcon} boxSize={5} mr={2} color={'white'}/>
       
       <Text
         as="h2"
         fontSize="lg"
         fontWeight="bold"
-        display="inline"
+        display="flex"
         color='white'
+        alignItems={'center'}
+        justifyContent={'center'}
         mt={0}
-      >
+        >
+       <Icon as={GithubIcon} boxSize={5} mr={2} color={'white'}/>
         Dependabot Alerts
       </Text>
+
+
+        {/* //toggle  */}
+        <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled}/>
+        </Flex>
     </Box>
   )
 }

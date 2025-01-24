@@ -6,7 +6,7 @@ import {
   SummaryAndDescpModal
 } from "../../components/index";
 
-export const TempContainer = ({
+export const MinimalisticView = ({
   isLoading,
   setLastElement,
   filteredData,

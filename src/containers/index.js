@@ -6,4 +6,4 @@ export {FilterSection} from './filterSection';
 export {ModalLayout} from './modalLayout';
 export {AlertsPage} from './alertsPage';
 export {AlertCard} from './alertCard';
-export {TempContainer} from './tempContainer';
+export {MinimalisticView} from './minimalisticView';

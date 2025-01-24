@@ -19,3 +19,5 @@ export {AlertTableButton} from './alertTableButton'
 export {CheckboxGroupComponent} from './checkBoxGroup';
 export {RadioGroupComponent} from './radioGroup';
 export {BadgeComponent} from './badge';
+export {ToggleButton} from './toggleButton';
+
