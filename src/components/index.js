@@ -16,3 +16,6 @@ export {FilterModalComponent} from './filterModalComponent'
 export {FilterModal} from './filterModal'
 export {AlertTableButton} from './alertTableButton'
 // export {DismissedModal} from './dismissedModal'
+export {CheckboxGroupComponent} from './checkBoxGroup';
+export {RadioGroupComponent} from './radioGroup';
+export {BadgeComponent} from './badge';

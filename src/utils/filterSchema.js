@@ -1,6 +1,8 @@
+
 export const filterSchema = [
-   {
+    {
       label: "Severity",
+      key:'severity',
       type: "checkbox",
       options: ["low", "medium", "high", "critical"],
       colorScheme: "orange",
@@ -8,6 +10,7 @@ export const filterSchema = [
     },
     {
       label: "State",
+      key:'state',
       type: "checkbox",
       options: ["open", "dismissed", "fixed", "auto_dismissed"],
       colorScheme: "orange",
@@ -15,6 +18,7 @@ export const filterSchema = [
     },
     {
       label: "Ecosystem",
+      key:'ecosystem',
       type: "checkbox",
       options: [
         "npm",
@@ -32,6 +36,7 @@ export const filterSchema = [
     },
     {
       label: "Scope",
+      key:'scope',
       type: "checkbox",
       options: ["development", "runtime"],
       colorScheme: "orange",
@@ -39,10 +44,22 @@ export const filterSchema = [
     },
     {
       label: "Sort",
+      key:'direction',
       type: "radio",
       options: ["asc", "desc"],
       colorScheme: "orange",
-      stateHandler: "sortOrder",
+      stateHandler: "direction",
     },
     
   ];
+
+  export const initialFiltersValues = {
+    severity: [],
+    state: [],
+    ecosystem: [],
+    scope: [],
+    direction: "desc",
+  }
+
+ 
+  
