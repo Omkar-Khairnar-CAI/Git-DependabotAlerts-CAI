@@ -32,9 +32,7 @@ export const FilterSection = ({modifyQueryParams, filterResultsBasedOnSearchQuer
           else if (tempFilters[key].length > 0) {
             queryParams[key] = tempFilters[key].join(',');
           }
-        })
-        console.log(queryParams);
-        
+        })        
         return queryParams; 
       };
 

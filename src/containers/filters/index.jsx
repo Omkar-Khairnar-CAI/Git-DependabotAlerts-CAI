@@ -42,8 +42,8 @@ export const Filters = ({
         >
           Filters
         </MenuButton>
-        <MenuList maxW={{ base: "85vw", md: "50vw" }}>
-          <Box p={5}>
+        <MenuList maxW={{ base: "85vw", md: "50vw" }}  >
+          <Box p={5} >
             <VStack align="start">
               {filterSchema.map((filter) => {
                 return filter.type === "checkbox" ? (

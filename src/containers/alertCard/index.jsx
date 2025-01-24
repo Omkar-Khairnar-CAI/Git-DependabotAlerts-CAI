@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -15,12 +15,23 @@ import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { BadgeComponent } from "../../components/index";
 
 export const AlertCard = ({ alert }) => {
-  const { 
-    security_vulnerability: { severity, vulnerable_version_range, first_patched_version }, 
-    security_advisory: { summary, description, cve_id, ghsa_id }, 
-    state, 
-    created_at, 
-    updated_at 
+  const {
+    security_vulnerability: {
+      severity,
+      vulnerable_version_range,
+      first_patched_version,
+    },
+    dependency: {
+      package: { ecosystem },
+    },
+    security_advisory: { summary, description, cve_id, ghsa_id },
+    state,
+    created_at,
+    updated_at,
+    dismissed_at,
+    dismissed_by,
+    dismissed_comment,
+    dismissed_reason,
   } = alert;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -49,10 +60,23 @@ export const AlertCard = ({ alert }) => {
           <Text fontSize="lg" fontWeight="bold">
             {summary}
           </Text>
-          <Text fontSize="sm" noOfLines={isOpen ? undefined : 1} color="gray.600">
-            {description.slice(0, descriptionSize)} {description.length > descriptionSize && !isOpen && "..."}
+          <Text
+            fontSize="sm"
+            noOfLines={isOpen ? undefined : 1}
+            color="gray.600"
+          >
+            {description.slice(0, descriptionSize)}{" "}
+            {description.length > descriptionSize && !isOpen && "..."}
           </Text>
-          <BadgeComponent type="severity" value={severity} />
+          <HStack>
+            <BadgeComponent type="severity" value={severity} />
+            <BadgeComponent type="state" value={state} variant={"outline"} />
+            <BadgeComponent
+              type="ecosystem"
+              value={ecosystem}
+              variant={"subtle"}
+            />
+          </HStack>
         </VStack>
         <Box>
           {isOpen ? (
@@ -92,11 +116,41 @@ export const AlertCard = ({ alert }) => {
             <Tr>
               <Td fontWeight="bold">Alert State</Td>
               <Td>
-                <Badge colorScheme={state === "open" ? "green" : "red"}>
+                <Badge
+                  colorScheme={
+                    state === "dismissed"
+                      ? "gray"
+                      : state === "fixed"
+                      ? "green"
+                      : "red"
+                  }
+                >
                   {state}
                 </Badge>
               </Td>
             </Tr>
+
+            {state === "dismissed" && (
+              <>
+                <Tr>
+                  <Td fontWeight="bold">Dismissed At</Td>
+                  <Td>{new Date(dismissed_at).toLocaleString()}</Td>
+                </Tr>
+                <Tr>
+                  <Td fontWeight="bold">Dismissed By</Td>
+                  <Td>{dismissed_by}</Td>
+                </Tr>
+                <Tr>
+                  <Td fontWeight="bold">Dismissed Comment</Td>
+                  <Td>{dismissed_comment}</Td>
+                </Tr>
+                <Tr>
+                  <Td fontWeight="bold">Dismissed Reason</Td>
+                  <Td>{dismissed_reason}</Td>
+                </Tr>
+              </>
+            )}
+
             <Tr>
               <Td fontWeight="bold">Created At</Td>
               <Td>{new Date(created_at).toLocaleString()}</Td>

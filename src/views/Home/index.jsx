@@ -1,6 +1,6 @@
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { TopBar, SideBar, MainBox , AlertsContainer} from "../../containers/index";
+import { TopBar, SideBar, MainBox } from "../../containers/index";
 
 // Home view
 // will have api calls to the list of repos
@@ -33,7 +33,7 @@ export const Home = () => {
 
       <Box ml={marginLeft} p={paddingMainComponent}>
         <MainBox REPO_NAME={currentActiveRepo}></MainBox>
-        <AlertsContainer/>
+        {/* <AlertsContainer/> */}
       </Box>
     </Box>
   );
