@@ -10,7 +10,7 @@ export const AlertTableButton = ({
     alert 
 }) => {
   return (
-    <Tooltip label={label} fontSize="xs" closeOnClick>
+    // <Tooltip label={label} fontSize="xs" closeOnClick zIndex={0}>
       <Button
         size="sm"
         variant={buttonVariant}
@@ -18,9 +18,10 @@ export const AlertTableButton = ({
           setSelectedAlert(alert); 
           openModal(true);
         }}
+        zIndex={0}
       >
         {icon}
       </Button>
-    </Tooltip>
+    // </Tooltip>
   );
 };

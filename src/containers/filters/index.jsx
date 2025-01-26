@@ -1,49 +1,57 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  VStack,
-  Menu,
-  MenuButton,
-  MenuList,
-} from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { filterSchema } from "../../utils/filterSchema";
 import { CheckboxGroupComponent } from "../../components/index";
 import { RadioGroupComponent } from "../../components/index";
+import {
+  Box,
+  Button,
+  VStack,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  useDisclosure,
+} from "@chakra-ui/react";
 
-export const Filters = ({
-  filters, 
-  setFilters,
-  filterResults,
-}) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+export const Filters = ({ filters, setFilters, filterResults }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [tempFilters, setTempFilters] = useState(filters);
-
-  useEffect(() => {
-    if (!menuOpen) {
-      setTempFilters(filters);
-    }
-  }, [filters, menuOpen]);
 
   const handleApplyChanges = () => {
     setFilters(tempFilters);
     filterResults(tempFilters);
-    setMenuOpen(false);
+    onClose();
   };
 
   return (
-    <div>
-      <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)}>
-        <MenuButton
-          as={Button}
-          rightIcon={<ChevronDownIcon />}
-          onClick={() => setMenuOpen(true)}
+    <Box position="relative" h="100%" w="100%">
+      {/* Button to open the drawer */}
+      <Button onClick={onOpen} rightIcon={<ChevronDownIcon />}>
+        Filters
+      </Button>
+
+      {/* Drawer Component */}
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        preserveScrollBarGap
+      >
+        <DrawerContent
+          h="100%"
+          maxH="100%"
+          borderLeftWidth="1px"
+          overflowY="auto"
+          position="absolute"
+          top={0}
+          right={0}
+          zIndex={10}
         >
-          Filters
-        </MenuButton>
-        <MenuList maxW={{ base: "85vw", md: "50vw" }}  >
-          <Box p={5} >
+          <DrawerHeader borderBottomWidth="1px">Filter Options</DrawerHeader>
+
+          <DrawerBody>
             <VStack align="start">
               {filterSchema.map((filter) => {
                 return filter.type === "checkbox" ? (
@@ -52,9 +60,9 @@ export const Filters = ({
                     label={filter.label}
                     options={filter.options}
                     value={tempFilters[filter.key]}
-                    onChange={(values) => {
-                      setTempFilters({ ...tempFilters, [filter.key]: values });
-                    }}
+                    onChange={(values) =>
+                      setTempFilters({ ...tempFilters, [filter.key]: values })
+                    }
                     colorScheme={filter.colorScheme}
                   />
                 ) : (
@@ -70,20 +78,19 @@ export const Filters = ({
                   />
                 );
               })}
-              <Box position={"absolute"} right={10} bottom={7}>
-                <Button
-                  colorScheme="black"
-                  variant="outline"
-                  _hover={{ bg: "#9f6d4d", color: "white" }}
-                  onClick={handleApplyChanges}
-                >
-                  Apply
-                </Button>
-              </Box>
             </VStack>
-          </Box>
-        </MenuList>
-      </Menu>
-    </div>
+          </DrawerBody>
+
+          <DrawerFooter borderTopWidth="1px">
+            <Button variant="outline" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="teal" onClick={handleApplyChanges}>
+              Apply
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </Box>
   );
 };

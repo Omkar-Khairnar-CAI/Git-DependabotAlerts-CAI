@@ -136,6 +136,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
           position="sticky"
           top={{ base: "9%", md: "10%", lg: "9%" }}
           bg="white"
+          mb={2}
         >
           <FilterSection
             modifyQueryParams={modifyQueryParams}

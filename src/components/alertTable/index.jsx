@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon, ChatIcon, EditIcon } from "@chakra-ui/icons";
 import { AlertTableButton } from "../index";
+import { getColor } from "../../utils/badgeColors";
 
 export const AlertTable = ({
   alerts,
@@ -28,15 +29,6 @@ export const AlertTable = ({
   pageNum,
   loading,
 }) => {
-  const getSeverityColor = (severity) => {
-    const colors = {
-      critical: "purple",
-      high: "red",
-      medium: "orange",
-      low: "green",
-    };
-    return colors[severity] || "gray";
-  };
   
 
   return (
@@ -45,41 +37,37 @@ export const AlertTable = ({
       rounded="md"
       shadow="lg"
       overflowY="auto"
-      maxH="70vh"
-      
+      overflowX="auto"
+      height="max-content"
+      maxH={{ base: "70vh", md: "80vh", lg: "77vh" }} // Responsive height for the table container
     >
       {(!loading && (!alerts || alerts.length === 0)) ? (
         <Flex p={8}>
-        <Text fontSize="lg" color="gray.500">
-          No alerts found under this category
-        </Text>
-      </Flex>) : (
-      <Table variant="striped" size={{ base: "xs", md: "sm", lg: "md" }} fontSize={{ base: "xs", md: "sm", lg: "md" }} >
-        <Thead bgColor={"teal.200"} 
-          position="sticky"
-          top={0}
-          zIndex={1}
-        >
-          <Tr>
-            <Th>View S & D</Th>
-            <Th>Severity</Th>
-            <Th>Ecosystem</Th>
-            <Th>Package</Th>
-            <Th>Scope</Th>
-            <Th>State</Th>
-            <Th>Details</Th>
-            <Th>Timeline</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {/* { loading ? (// && pageNum === 1 ? (
-            <Tr >
-            <Center w="100%" h="100%" aspectRatio={1} direction={"column"} justifyContent="center" alignItems="center" marginLeft={"50%"}>
-              <Spinner size="xl" color="teal.200" emptyColor="teal.600" />
-            </Center>
+          <Text fontSize="lg" color="gray.500">
+            No alerts found under this category
+          </Text>
+        </Flex>
+      ) : (
+        <Table variant="striped" size={{ base: "xs", md: "sm", lg: "md" }} fontSize={{ base: "xs", md: "sm", lg: "md" }} width="100%">
+          <Thead
+            bgColor={"#9f6d4d"}
+            position="sticky"
+            top={0}
+            zIndex={1}
+            fontSize={{ base: "xs", md: "sm", lg: "md" }}
+          >
+            <Tr>
+              <Th color="white">View S & D</Th>
+              <Th color="white">Severity</Th>
+              <Th color="white">Ecosystem</Th>
+              <Th color="white">Package</Th>
+              <Th color="white">Scope</Th>
+              <Th color="white">State</Th>
+              <Th color="white">Details</Th>
+              <Th color="white">Timeline</Th>
             </Tr>
-              
-          ) : ( */}
+          </Thead>
+          <Tbody>
             <>
               {alerts.map((alert, index) => (
                 <Tr
@@ -93,16 +81,13 @@ export const AlertTable = ({
                       setSelectedAlert={setSelectedAlert}
                       buttonVariant="link"
                       icon={<EditIcon />}
-                      alert={alert} 
+                      alert={alert}
                     />
                   </Td>
                   <Td>
                     <Badge
-                      colorScheme={getSeverityColor(
-                        alert.security_advisory.severity
-                      )}
+                      colorScheme={getColor("severity", alert.security_advisory.severity)}
                       fontSize="xs"
-                      // {{ base: "xs", md: "sm", lg: "md" }}
                     >
                       {alert.security_advisory.severity.toUpperCase()}
                     </Badge>
@@ -112,13 +97,7 @@ export const AlertTable = ({
                   <Td>{alert.dependency.scope}</Td>
                   <Td>
                     <Badge
-                      colorScheme={
-                        alert.state === "open"
-                          ? "red"
-                          : alert.state === "fixed"
-                          ? "green"
-                          : "gray"
-                      }
+                      colorScheme={getColor("state", alert.state.toLowerCase())}
                       fontSize={{ base: "xs", md: "sm", lg: "md" }}
                       variant={'outline'}
                     >
@@ -132,7 +111,7 @@ export const AlertTable = ({
                       setSelectedAlert={setSelectedAlert}
                       buttonVariant="solid"
                       icon={<ViewIcon />}
-                      alert={alert}  
+                      alert={alert}
                     />
                   </Td>
                   <Td>
@@ -143,14 +122,13 @@ export const AlertTable = ({
                       buttonVariant="solid"
                       icon={<CalendarIcon />}
                       alert={alert}
-                    />                
+                    />
                   </Td>
                 </Tr>
               ))}
             </>
-          {/* )} */}
-        </Tbody>
-      </Table>
+          </Tbody>
+        </Table>
       )}
     </TableContainer>
   );
