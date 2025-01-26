@@ -72,14 +72,14 @@ export const AlertTable = ({
           </Tr>
         </Thead>
         <Tbody>
-          { loading && pageNum === 1 ? (
+          {/* { loading ? (// && pageNum === 1 ? (
             <Tr >
             <Center w="100%" h="100%" aspectRatio={1} direction={"column"} justifyContent="center" alignItems="center" marginLeft={"50%"}>
               <Spinner size="xl" color="teal.200" emptyColor="teal.600" />
             </Center>
             </Tr>
               
-          ) : (
+          ) : ( */}
             <>
               {alerts.map((alert, index) => (
                 <Tr
@@ -148,7 +148,7 @@ export const AlertTable = ({
                 </Tr>
               ))}
             </>
-          )}
+          {/* )} */}
         </Tbody>
       </Table>
       )}

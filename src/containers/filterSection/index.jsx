@@ -11,7 +11,7 @@ import {Filters} from '../index'
 import { initialFiltersValues } from "../../utils/filterSchema";
 
 
-export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBasedOnSearchQuery}) => {
+export const FilterSection = ({modifyQueryParams, filterResultsBasedOnSearchQuery}) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [filters, setFilters] = useState(initialFiltersValues);
    
@@ -32,9 +32,7 @@ export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBa
           else if (tempFilters[key].length > 0) {
             queryParams[key] = tempFilters[key].join(',');
           }
-        })
-        console.log(queryParams);
-        
+        })        
         return queryParams; 
       };
 
@@ -57,9 +55,6 @@ export const FilterSection = ({getAlertsData, modifyQueryParams, filterResultsBa
         debouncedFilterResults();
       }, [searchQuery]);
 
-      useEffect(()=>{
-        console.log(filters);
-      },[filters])
      
   return (
     <Box bgColor='white'>

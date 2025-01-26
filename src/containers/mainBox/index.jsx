@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import getGitData from "../../utils/getGitData";
 import { Loader, Error } from "../../components/index";
-import { FilterSection } from "../index";
+import { FilterSection, MinimalisticView } from "../index";
 import { AlertsPage } from "../index";
 
 const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER;
 
-export const MainBox = ({ REPO_NAME }) => {
+export const MainBox = ({ REPO_NAME, isToggled }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [queryParams, setQueryParams] = useState({});
@@ -15,10 +15,10 @@ export const MainBox = ({ REPO_NAME }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isError, setIsError] = useState(false);
-  const [error, setError] = useState({msg: "", statusCode:''});
-  const [hasMoreContent, setHasMoreContent] = useState(true);
+  const [error, setError] = useState({ msg: "", statusCode: "" });
 
-  const observerRef = useRef(null); 
+  const [hasMoreContent, setHasMoreContent] = useState(true);
+  const lastElementRef = useRef(null);
 
   const modifyQueryParams = (newParams) => {
     setQueryParams(newParams);
@@ -32,7 +32,11 @@ export const MainBox = ({ REPO_NAME }) => {
     try {
       if (REPO_NAME) {
         setIsLoading(true);
-        const params = { ...queryParams, per_page: pageSize, page: currentPage };
+        const params = {
+          ...queryParams,
+          per_page: pageSize,
+          page: currentPage,
+        };
         const alerts = await getGitData({
           endpoint: `repos/${GITHUB_OWNER}/${REPO_NAME}/dependabot/alerts`,
           params,
@@ -40,7 +44,7 @@ export const MainBox = ({ REPO_NAME }) => {
 
         if (alerts.error) {
           setIsError(true);
-          setError({msg: alerts.msg, statusCode: alerts.statusCode});
+          setError({ msg: alerts.msg, statusCode: alerts.statusCode });
         } else {
           const currData = alerts.data;
           setData((prevData) =>
@@ -52,12 +56,12 @@ export const MainBox = ({ REPO_NAME }) => {
 
           setHasMoreContent(currData.length === pageSize);
           setIsError(false);
-          setError({msg: '', statusCode: ''})
+          setError({ msg: "", statusCode: "" });
         }
       }
     } catch (error) {
       setIsError(true);
-      setError({msg: error.message, statusCode: error.status});
+      setError({ msg: error.message, statusCode: error.status });
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +87,7 @@ export const MainBox = ({ REPO_NAME }) => {
     setHasMoreContent(true);
     window.scrollTo({
       top: 0,
-      behavior: "smooth", 
+      behavior: "smooth",
     });
     getAlertsData(1);
   }, [REPO_NAME, queryParams]);
@@ -94,56 +98,70 @@ export const MainBox = ({ REPO_NAME }) => {
     }
   }, [page]);
 
+  const observerCallback = useCallback(
+    (entries) => {
+      if (entries[0].isIntersecting && hasMoreContent && !isLoading) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    },
+    [hasMoreContent, isLoading]
+  );
+
   useEffect(() => {
-    if (observerRef.current) observerRef.current.disconnect(); 
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 1.0,
+    });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMoreContent && !isLoading) {
-          setPage((prevPage) => prevPage + 1);
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    const target = document.getElementById("observer-target");
-    if (target) {
-      observer.observe(target);
+    if (lastElementRef.current) {
+      observer.observe(lastElementRef.current);
     }
 
-    observerRef.current = observer; 
-
     return () => {
-      if (observerRef.current) observerRef.current.disconnect(); 
+      if (lastElementRef.current) {
+        observer.unobserve(lastElementRef.current);
+      }
     };
-  }, [hasMoreContent, isLoading]);
+  }, [observerCallback]);
 
   return (
     <Box p={2} mt={"20px"}>
       <Grid templateRows="auto 1fr" gap={3}>
-        <GridItem height={"22px"} position="sticky" top={"8%"} bg={"white"}></GridItem>
-        <GridItem position="sticky" top={"10%"}>
+        <GridItem
+          height={"30px"}
+          position="sticky"
+          top={{ sm: "6%", md: "6%", lg: "6%" }}
+          bg={"white"}
+        ></GridItem>
+        <GridItem
+          position="sticky"
+          top={{ base: "9%", md: "10%", lg: "9%" }}
+          bg="white"
+        >
           <FilterSection
             modifyQueryParams={modifyQueryParams}
-            getAlertsData={getAlertsData}
             filterResultsBasedOnSearchQuery={filterResultsBasedOnSearchQuery}
           />
         </GridItem>
 
         <GridItem>
           {isError ? (
-            <Error message={error.msg} statusCode={error.statusCode}/>
+            <Error message={error.msg} statusCode={error.statusCode} />
           ) : (
             <>
-              <AlertsPage filteredData={filteredData} />
+              {isToggled ? (
+                <AlertsPage
+                  filteredData={filteredData}
+                  isLoading={isLoading}
+                  setLastElement={(node) => (lastElementRef.current = node)}
+                />
+              ) : (
+                <MinimalisticView
+                  filteredData={filteredData}
+                  isLoading={isLoading}
+                  setLastElement={(node) => (lastElementRef.current = node)}
+                />
+              )}
               {isLoading && <Loader />}
-              <div
-                id="observer-target"
-                style={{
-                  height: "1px",
-                  visibility: "hidden",
-                }}
-              ></div>
             </>
           )}
         </GridItem>

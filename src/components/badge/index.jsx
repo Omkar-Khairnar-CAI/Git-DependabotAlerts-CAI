@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge } from "@chakra-ui/react";
 
-export const BadgeComponent = ({ type, value }) => {
+export const BadgeComponent = ({ type, value, variant }) => {
   let colorScheme;
 
   if (type === "severity") {
@@ -13,8 +13,9 @@ export const BadgeComponent = ({ type, value }) => {
   }
 
   return (
-    <Badge colorScheme={colorScheme}>
-      {type === "severity" ? `Severity: ${value}` : value}
+    <Badge colorScheme={colorScheme} variant={variant}>
+      {/* {type === "severity" ? `Severity: ${value}` : value} */}
+      {value}
     </Badge>
   );
 };
