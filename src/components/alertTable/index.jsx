@@ -53,7 +53,7 @@ export const AlertTable = ({
             bgColor={"#9f6d4d"}
             position="sticky"
             top={0}
-            zIndex={1}
+            zIndex={0}
             fontSize={{ base: "xs", md: "sm", lg: "md" }}
           >
             <Tr>
