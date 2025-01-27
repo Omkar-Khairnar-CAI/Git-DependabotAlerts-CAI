@@ -23,7 +23,7 @@ export const MinimalisticView = ({
   return (
     <>
       <AlertTable
-        loading={isLoading}
+        isLoading={isLoading}
         // observer
 
         setLastElement={setLastElement}

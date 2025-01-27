@@ -8,15 +8,12 @@ import {
   Thead,
   Tr,
   Badge,
-  Button,
-  Tooltip,
   Flex,
-  Spinner,
   Text,
-  Center
+  Box,
 } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon, ChatIcon, EditIcon } from "@chakra-ui/icons";
-import { AlertTableButton } from "../index";
+import { AlertTableButton, Loader } from "../index";
 import { getColor } from "../../utils/badgeColors";
 
 export const AlertTable = ({
@@ -26,11 +23,8 @@ export const AlertTable = ({
   setIsMetaDataOpen,
   setIsTimelineOpen,
   setIsSummandDescpOpen,
-  pageNum,
-  loading,
+  isLoading,
 }) => {
-  
-
   return (
     <TableContainer
       bg="white"
@@ -41,14 +35,19 @@ export const AlertTable = ({
       height="max-content"
       maxH={{ base: "70vh", md: "80vh", lg: "77vh" }} // Responsive height for the table container
     >
-      {(!loading && (!alerts || alerts.length === 0)) ? (
+      {!isLoading && (!alerts || alerts.length === 0) ? (
         <Flex p={8}>
           <Text fontSize="lg" color="gray.500">
             No alerts found under this category
           </Text>
         </Flex>
       ) : (
-        <Table variant="striped" size={{ base: "xs", md: "sm", lg: "md" }} fontSize={{ base: "xs", md: "sm", lg: "md" }} width="100%">
+        <Table
+          variant="striped"
+          size={{ base: "xs", md: "sm", lg: "md" }}
+          fontSize={{ base: "xs", md: "sm", lg: "md" }}
+          width="100%"
+        >
           <Thead
             bgColor={"#9f6d4d"}
             position="sticky"
@@ -72,7 +71,7 @@ export const AlertTable = ({
               {alerts.map((alert, index) => (
                 <Tr
                   key={index}
-                  ref={index === alerts.length - 1 ? setLastElement : null}
+                  ref={index === alerts.length - 2 ? setLastElement : null}
                 >
                   <Td>
                     <AlertTableButton
@@ -86,7 +85,10 @@ export const AlertTable = ({
                   </Td>
                   <Td>
                     <Badge
-                      colorScheme={getColor("severity", alert.security_advisory.severity)}
+                      colorScheme={getColor(
+                        "severity",
+                        alert.security_advisory.severity
+                      )}
                       fontSize="xs"
                     >
                       {alert.security_advisory.severity.toUpperCase()}
@@ -99,7 +101,7 @@ export const AlertTable = ({
                     <Badge
                       colorScheme={getColor("state", alert.state.toLowerCase())}
                       fontSize={{ base: "xs", md: "sm", lg: "md" }}
-                      variant={'outline'}
+                      variant={"outline"}
                     >
                       {alert.state}
                     </Badge>
@@ -126,6 +128,15 @@ export const AlertTable = ({
                   </Td>
                 </Tr>
               ))}
+              <Tr>
+                <Td  colSpan={8}>
+                  {isLoading && (
+                    <Box p={4}>
+                      <Loader />
+                    </Box>
+                  )}
+                </Td>
+              </Tr>
             </>
           </Tbody>
         </Table>

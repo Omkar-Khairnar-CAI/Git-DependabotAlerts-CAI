@@ -150,11 +150,14 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
           ) : (
             <>
               {isToggled ? (
+                <>
                 <AlertsPage
                   filteredData={filteredData}
                   isLoading={isLoading}
                   setLastElement={(node) => (lastElementRef.current = node)}
                 />
+                {isLoading && <Loader />}
+                </>
               ) : (
                 <MinimalisticView
                   filteredData={filteredData}
@@ -162,7 +165,6 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
                   setLastElement={(node) => (lastElementRef.current = node)}
                 />
               )}
-              {isLoading && <Loader />}
             </>
           )}
         </GridItem>
