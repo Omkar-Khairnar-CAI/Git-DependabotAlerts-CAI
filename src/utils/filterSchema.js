@@ -5,7 +5,7 @@ export const filterSchema = [
       key:'severity',
       type: "checkbox",
       options: ["low", "medium", "high", "critical"],
-      colorScheme: "orange",
+      colorScheme: 'orange',
       stateHandler: "selectedSeverity", 
     },
     {

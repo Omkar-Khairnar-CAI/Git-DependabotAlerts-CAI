@@ -17,10 +17,7 @@ export const Home = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const handleToggleView = () => {
-      console.log("switch clicked ---------")
-      console.log("before", toggleView)
      setToggleView(!toggleView);
-     console.log("after", toggleView);
   }
   return (
     <Box>
@@ -32,6 +29,7 @@ export const Home = () => {
       />
       <SideBar
         isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
         currentActiveRepo={currentActiveRepo}
         setCurrentActiveRepo={setCurrentActiveRepo}
         handleSideBarToggle={handleSideBarToggle}

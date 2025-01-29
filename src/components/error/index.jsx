@@ -1,9 +1,10 @@
-import { Box, Text, Icon } from "@chakra-ui/react";
+import { Box, Text, Icon, useTheme } from "@chakra-ui/react";
 import React from "react";
 import { FaLock, FaExclamationTriangle, FaBan, FaBug } from "react-icons/fa";
 
 export const Error = ({ message, statusCode }) => {
-  // Render specific content based on the status code
+  const theme = useTheme();
+
   const getErrorDetails = () => {
     switch (statusCode) {
       case 401:
@@ -11,28 +12,28 @@ export const Error = ({ message, statusCode }) => {
           icon: FaLock,
           title: "Unauthorized Access",
           description: "You don't have permission to access this resource. Please check your credentials or login again.",
-          color: "orange.400",
+          color: theme.colors.error.main,
         };
-      case 403:
+      case 403: 
         return {
           icon: FaBan,
           title: "Forbidden",
           description: "Access to this resource is restricted. Please contact the administrator if you believe this is a mistake.",
-          color: "orange.400",
+          color: theme.colors.error.main,
         };
       case 404:
         return {
           icon: FaExclamationTriangle,
           title: "Resource Not Found",
           description: "The requested resource could not be found. It might have been moved or deleted.",
-          color: "blue.400",
+          color: theme.colors.error.light,
         };
       default:
         return {
           icon: FaBug,
           title: "An Error Occurred",
           description: message || "Something went wrong. Please try again later.",
-          color: "gray.500",
+          color: theme.colors.error.main,
         };
     }
   };

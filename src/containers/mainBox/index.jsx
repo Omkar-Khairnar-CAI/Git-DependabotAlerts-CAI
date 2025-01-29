@@ -124,7 +124,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
   }, [observerCallback]);
 
   return (
-    <Box p={2} mt={"20px"}>
+    <Box p={2} mt={"20px"} >
       <Grid templateRows="auto 1fr" gap={3}>
         <GridItem
           height={"30px"}
