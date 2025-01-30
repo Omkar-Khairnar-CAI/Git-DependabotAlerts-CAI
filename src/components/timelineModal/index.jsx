@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, Box, Text } from '@chakra-ui/react';
+import { VStack, Box, Text, HStack, Divider } from '@chakra-ui/react';
 import { ModalLayout } from '../../containers/modalLayout';
 
 export const TimelineModal = ({ isTimelineOpen, setIsTimelineOpen, selectedAlert }) => {
@@ -10,7 +10,7 @@ export const TimelineModal = ({ isTimelineOpen, setIsTimelineOpen, selectedAlert
       title="Alert Timeline"
     >
       {selectedAlert && (
-        <VStack align="stretch" spacing={4}>
+        <HStack align="stretch" justify={"space-evenly"}>
           <Box>
             <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }}>Published from</Text>
             <Text fontSize={{ base: "sm", md: "md" }}>
@@ -29,7 +29,7 @@ export const TimelineModal = ({ isTimelineOpen, setIsTimelineOpen, selectedAlert
               {selectedAlert.fixed_at ? new Date(selectedAlert.fixed_at).toLocaleDateString() : 'Not fixed'}
             </Text>
           </Box>
-        </VStack>
+        </HStack>
       )}
     </ModalLayout>
   );

@@ -124,7 +124,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
   }, [observerCallback]);
 
   return (
-    <Box p={2} mt={"20px"}>
+    <Box p={2} mt={"20px"} >
       <Grid templateRows="auto 1fr" gap={3}>
         <GridItem
           height={"30px"}
@@ -150,11 +150,14 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
           ) : (
             <>
               {isToggled ? (
+                <>
                 <AlertsPage
                   filteredData={filteredData}
                   isLoading={isLoading}
                   setLastElement={(node) => (lastElementRef.current = node)}
                 />
+                {isLoading && <Loader />}
+                </>
               ) : (
                 <MinimalisticView
                   filteredData={filteredData}
@@ -162,7 +165,6 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
                   setLastElement={(node) => (lastElementRef.current = node)}
                 />
               )}
-              {isLoading && <Loader />}
             </>
           )}
         </GridItem>

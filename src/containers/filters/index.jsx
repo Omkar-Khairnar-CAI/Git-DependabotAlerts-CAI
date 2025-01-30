@@ -13,9 +13,12 @@ import {
   DrawerBody,
   DrawerFooter,
   useDisclosure,
+  theme,
+  useTheme,
 } from "@chakra-ui/react";
 
 export const Filters = ({ filters, setFilters, filterResults }) => {
+  const theme = useTheme()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tempFilters, setTempFilters] = useState(filters);
 
@@ -47,7 +50,7 @@ export const Filters = ({ filters, setFilters, filterResults }) => {
           position="absolute"
           right={0}
           zIndex={5}
-          bg="#F4F1EB" 
+          bg={theme.colors.primary.lighter} 
         >
 
           <DrawerHeader borderBottomWidth="1px">Filter Options</DrawerHeader>
@@ -64,7 +67,7 @@ export const Filters = ({ filters, setFilters, filterResults }) => {
                     onChange={(values) =>
                       setTempFilters({ ...tempFilters, [filter.key]: values })
                     }
-                    colorScheme={filter.colorScheme}
+                    colorScheme={theme.colors.primary.darkest}
                   />
                 ) : (
                   <RadioGroupComponent
@@ -75,7 +78,7 @@ export const Filters = ({ filters, setFilters, filterResults }) => {
                     onChange={(value) =>
                       setTempFilters({ ...tempFilters, [filter.key]: value })
                     }
-                    colorScheme={filter.colorScheme}
+                    colorScheme={theme.colors.primary.darkest}
                   />
                 );
               })}
@@ -86,7 +89,7 @@ export const Filters = ({ filters, setFilters, filterResults }) => {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="teal" onClick={handleApplyChanges}>
+            <Button background={theme.colors.primary.main} color={'white'} onClick={handleApplyChanges} _hover={{ bg: theme.colors.primary.dark }}>
               Apply
             </Button>
           </DrawerFooter>

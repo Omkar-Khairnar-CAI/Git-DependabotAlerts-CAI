@@ -10,11 +10,13 @@ import {
   Td,
   Badge,
   useBreakpointValue,
+  useTheme,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { BadgeComponent } from "../../components/index";
 
 export const AlertCard = ({ alert }) => {
+  const theme = useTheme()
   const {
     security_vulnerability: {
       severity,
@@ -52,7 +54,7 @@ export const AlertCard = ({ alert }) => {
       borderRadius="md"
       cursor="pointer"
       bg="white"
-      _hover={{ bg: "gray.50" }}
+      _hover={{bg:theme.colors.primary.lightest}}
       onClick={onToggle}
     >
       <HStack justify="space-between" align="flex-start">

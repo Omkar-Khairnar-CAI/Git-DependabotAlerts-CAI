@@ -5,6 +5,7 @@ import {
   TimelineModal,
   SummaryAndDescpModal
 } from "../../components/index";
+import { Box } from "@chakra-ui/react";
 
 export const MinimalisticView = ({
   isLoading,
@@ -21,9 +22,9 @@ export const MinimalisticView = ({
   const [selectedAlert, setSelectedAlert] = useState(null);
 
   return (
-    <>
+    <Box mt={1}>
       <AlertTable
-        loading={isLoading}
+        isLoading={isLoading}
         // observer
 
         setLastElement={setLastElement}
@@ -54,6 +55,6 @@ export const MinimalisticView = ({
         setIsTimelineOpen={setIsTimelineOpen}
         selectedAlert={selectedAlert}
       />
-    </>
+    </Box>
   );
 };

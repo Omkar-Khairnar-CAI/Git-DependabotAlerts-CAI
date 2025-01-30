@@ -8,6 +8,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Divider,
 } from "@chakra-ui/react";
 
 export const ModalLayout = ({ 
@@ -23,7 +24,7 @@ export const ModalLayout = ({
       onClose={onClose}
       size={size}
       scrollBehavior="inside"
-      isCentered
+      // isCentered
     >
       <ModalOverlay />
       <ModalContent>
@@ -31,6 +32,7 @@ export const ModalLayout = ({
           {title}
         </ModalHeader>
         <ModalCloseButton />
+        <Divider/>
         <ModalBody fontSize={{ base: "sm", md: "md" }}>
           {children}
         </ModalBody>

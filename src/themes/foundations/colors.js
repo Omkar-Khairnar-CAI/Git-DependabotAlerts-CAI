@@ -9,7 +9,7 @@ const colors = {
   
     primary: {
       lightest: "#D6E4FF80",
-      lighter: "#D6E4FF",
+      lighter: "#D6E4FF", 
       light: "#84A9FF",
       main: "#3366FF",
       dark: "#1939B7",
@@ -45,7 +45,7 @@ const colors = {
       hoverColor: "#D6E4FF80",
     },
   
-    sideBar: {
+    sideBar: { 
       main: "#D6E4FF",
       activeText: "#3366FF",
       hoverColor: "#3366FF",

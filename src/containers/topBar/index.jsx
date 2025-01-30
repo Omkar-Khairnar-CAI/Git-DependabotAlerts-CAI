@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, IconButton, Text, Icon, Flex } from "@chakra-ui/react";
+import { Box, IconButton, Text, Icon, Flex, useTheme } from "@chakra-ui/react";
 import { GithubIcon } from "../../assets/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { ToggleButton } from '../../components/index';
@@ -7,12 +7,13 @@ import { ToggleButton } from '../../components/index';
 
 // this is the complete top box - contains heading 
 export const TopBar = ({ handleSideBarToggle, isSidebarOpen, isToggled, setIsToggled }) => {
+  const theme = useTheme();
   const onToggle = () =>{
     handleSideBarToggle();
-  }
+  } 
   return (
     <Box
-      bg='#7f5e4e'
+      bg={theme.colors.primary.light}
       height="60px"
       width="100%"
       position="fixed"
@@ -52,7 +53,9 @@ export const TopBar = ({ handleSideBarToggle, isSidebarOpen, isToggled, setIsTog
 
 
         {/* //toggle  */}
+        <Box >
         <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled}/>
+        </Box>
         </Flex>
     </Box>
   )
