@@ -8,6 +8,7 @@ export const SideBarItem = ({ repo, currentActiveRepo, handleItemClick }) => {
         mb={4}
         p={2}
         bg={currentActiveRepo === repo.name ? "#8f6d4d" : ""}
+        fontSize={{ base: "sm", md: "md" }}
         onClick={() => handleItemClick(repo)}
         borderRadius="md"
         textOverflow="ellipsis"

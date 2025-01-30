@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckboxGroup, HStack, Checkbox, Box, Badge } from "@chakra-ui/react";
+import { CheckboxGroup, HStack, Checkbox, Box, Badge , Divider} from "@chakra-ui/react";
 import { getColor } from "../../utils/badgeColors";
 export const CheckboxGroupComponent = ({
   label,
@@ -9,8 +9,8 @@ export const CheckboxGroupComponent = ({
   colorScheme,
 }) => {
   return (
-    <div>
-      <Box fontWeight="500" >{label}:</Box>
+    <>
+      <Box fontWeight="500" >{label} :</Box>
       <CheckboxGroup value={value} onChange={onChange} colorScheme={colorScheme}>
         <HStack align="start" wrap="wrap">
           {options.map((option) => (
@@ -22,6 +22,7 @@ export const CheckboxGroupComponent = ({
           ))}
         </HStack>
       </CheckboxGroup>
-    </div>
+      <Divider/>
+    </>
   );
 };

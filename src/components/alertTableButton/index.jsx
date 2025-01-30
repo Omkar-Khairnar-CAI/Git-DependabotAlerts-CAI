@@ -12,7 +12,7 @@ export const AlertTableButton = ({
   return (
     // <Tooltip label={label} fontSize="xs" closeOnClick zIndex={0}>
       <Button
-        size="sm"
+        size={{ base: "xs", md: "sm" }}
         variant={buttonVariant}
         onClick={() => {
           setSelectedAlert(alert); 

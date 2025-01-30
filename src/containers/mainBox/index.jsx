@@ -13,7 +13,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
   const [queryParams, setQueryParams] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(15);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState({ msg: "", statusCode: "" });
 
@@ -136,7 +136,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
           position="sticky"
           top={{ base: "9%", md: "10%", lg: "9%" }}
           bg="white"
-          mb={2}
+          mb={{ base: "10px", md: "15px" }}
         >
           <FilterSection
             modifyQueryParams={modifyQueryParams}

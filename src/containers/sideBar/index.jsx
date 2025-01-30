@@ -16,7 +16,7 @@ export const SideBar = ({
   const [searchtext, setSearchtext] = useState("");
   const theme = useTheme();
   const sideBarWidth = useBreakpointValue({
-    base: "60%",
+    base: "50%",
     md: "33%",
     lg: "18%",
   });
@@ -76,7 +76,7 @@ export const SideBar = ({
       top="60px"
       p={4}
       mt={sideBarTopMargin}
-      zIndex={1}
+      zIndex={2}
       left={isSidebarOpen ? "0" : "-100%"}
       transition="left 0.3s ease-in-out"
     >
