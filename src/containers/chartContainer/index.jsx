@@ -1,5 +1,5 @@
 import React from 'react'
-import {StackedBarChart, PieChartComponent} from '../../components'
+import {StackedBarChart, PieChartComponent, ScatterChartComponent} from '../../components/charts'
 
 
 export const ChartContainer = () => {
@@ -48,9 +48,10 @@ export const ChartContainer = () => {
         },
       ];
   return (
-    <div>
+    <div width="100%" height="100%">
         <StackedBarChart data={stackedBarChartData} height={400} width={600} margin={{top:10, right:10, left:10, bottom:10}} />
         <PieChartComponent/>
+        <ScatterChartComponent />
       
     </div>
   )
