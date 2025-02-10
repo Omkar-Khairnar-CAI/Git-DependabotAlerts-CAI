@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React, { useEffect, PureComponent } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -6,13 +7,13 @@ export const StackedBarChart  = (props) => {
 
   return (
    <>
-   
+    <Box >Heading</Box>
         <BarChart
           width={width}
           height={height}
           data={data}
           margin={{
-            top: margin?.top || 0,
+            top: margin?.top || 10,
             right: margin?.right || 0,
             left: margin?.left || 0,
             bottom: margin?.bottom || 0,

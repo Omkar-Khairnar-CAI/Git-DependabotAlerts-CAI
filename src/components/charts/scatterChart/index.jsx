@@ -1,5 +1,7 @@
+import { Box } from '@chakra-ui/react';
 import { CartesianGrid, Legend, Scatter, ScatterChart, XAxis, YAxis, ZAxis , Tooltip, ResponsiveContainer} from 'recharts';
-export const ScatterChartComponent = () => {
+export const ScatterChartComponent = (props) => {
+  const {height, width} = props;
   const data01 = [
     {
       "x": 100,
@@ -132,12 +134,13 @@ export const ScatterChartComponent = () => {
   
                               
   return (
-    // <ResponsiveContainer minWidth={700} minHeight="100%" key={Math.random()}>
+    <>
+    <Box>Heading</Box>
       <ScatterChart
-        width={300}
-        height={250}
+        width={width}
+        height={height}
         margin={{
-          top: 20,
+          top: 10,
           right: 20,
           bottom: 10,
           left: 10,
@@ -154,7 +157,7 @@ export const ScatterChartComponent = () => {
         <Scatter name="High" data={data03} fill="#DA0100" />
         <Scatter name="Critical" data={data04} fill="#FFA500" />
       </ScatterChart>
-    // </ResponsiveContainer>
+      </>
   )
 }
 
