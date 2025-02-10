@@ -7,3 +7,4 @@ export {ModalLayout} from './modalLayout';
 export {AlertsPage} from './alertsPage';
 export {AlertCard} from './alertCard';
 export {MinimalisticView} from './minimalisticView';
+export {ChartContainer} from './chartContainer';

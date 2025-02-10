@@ -3,8 +3,8 @@ import foundations from "./foundations";
 
 
 const config = {
-  initialColorMode: "dark",
-  useSystemColorMode: false,
+  initialColorMode: "light",  
+  useSystemColorMode: false,  
 };
 
 const fonts = {
