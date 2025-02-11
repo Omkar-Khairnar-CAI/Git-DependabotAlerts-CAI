@@ -1,4 +1,3 @@
-import { Box, Flex, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
   BarChart,
@@ -10,9 +9,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { mapToStackedBarChartData2 } from "../../../utils/dataModel";
+import {
+  mapToStackedBarChartData,
+} from "../../../utils/dataModel";
+import { Box, Flex, Select, Text } from "@chakra-ui/react";
 
-export const StackedBarChart = ({ height, width, margin }) => {
+export const StackedBarChart = (props) => {
+  const { height, width, margin, XAxisKey, YAxisKey } = props;
+  const [param, setParam] = useState("ecosystem");
   const alerts = [
     {
       number: 2,
@@ -23,7 +27,7 @@ export const StackedBarChart = ({ height, width, margin }) => {
           name: "django",
         },
         manifest_path: "path/to/requirements.txt",
-        scope: "development",
+        scope: "runtime",
       },
       security_advisory: {
         ghsa_id: "GHSA-rf4j-j272-fj86",
@@ -611,60 +615,50 @@ export const StackedBarChart = ({ height, width, margin }) => {
       },
     },
   ];
-  const [param, setParam] = useState("ecosystem");
+  // const param = "scope";
+  const stackedBarChartData = mapToStackedBarChartData(alerts, param);
+  console.log("Data @ stackedbarchart", stackedBarChartData);
 
-// Define possible values for each parameter
-const possibleValuesMap = {
-  state: ["auto_dismissed", "dismissed", "fixed", "open"],
-  severity: ["low", "medium", "high", "critical"],
-  ecosystem: ["composer", "go", "maven", "npm", "nuget", "pip", "pub", "rubygems", "rust"],
-  scope: ["development", "runtime"],
-};
-
-// Get possible values dynamically based on `param`
-const possibleValues = possibleValuesMap[param] || [];
-
-const stackedBarChartData = mapToStackedBarChartData2(alerts, param);
-console.log("Data @ stackedbarchart", stackedBarChartData);
-
-const colorScheme = ["#82ca9d", "#ffc658", "#ff7300", "#d32f2f", "#8884d8"];
-
-return (
-  <>
-    <Flex align={"center"} justify={"space-between"} my={2}>
-      <Box fontSize="lg" fontWeight="bold">Alerts Breakdown by {param}</Box>
-      <Select
-        value={param}
-        onChange={(e) => setParam(e.target.value)}
-        width={"30%"}
+  return (
+    <>
+      <Flex align={"center"} justify={"space-between"} my={1}>
+        <Box>Heading</Box>
+        <Select
+          value={param}
+          onChange={(e) => setParam(e.target.value)}
+          width={"30%"}
+        >
+          <option value="ecosystem">Ecosystem</option>
+          <option value="state">State</option>
+          <option value="package_name">Package Name</option>
+          <option value="scope">Scope</option>
+          <option value="repository_name">Repository</option>
+        </Select>
+      </Flex>
+      <ResponsiveContainer
+        width={width}
+        height={height}
+        margin={{
+          top: margin?.top || 0,
+          right: margin?.right || 0,
+          left: margin?.left || 0,
+          bottom: margin?.bottom || 0,
+        }}
       >
-        <option value="ecosystem">Ecosystem</option>
-        <option value="state">State</option>
-        <option value="scope">Scope</option>
-        <option value="severity">Severity</option>
-      </Select>
-    </Flex>
-
-    <ResponsiveContainer width={width} height={height}>
-      <BarChart data={stackedBarChartData} margin={margin}>
-        <CartesianGrid strokeDasharray="4 4" />
-        <XAxis dataKey="repository" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        
-        {/* Dynamically render <Bar> components based on possible values */}
-        {possibleValues.map((key, index) => (
-          <Bar
-            key={key}
-            dataKey={key}
-            stackId="a"
-            fill={colorScheme[index % colorScheme.length]}
-          />
-        ))}
-      </BarChart>
-    </ResponsiveContainer>
-  </>
-);
-
+        <BarChart
+          data={stackedBarChartData} 
+        >
+          <CartesianGrid strokeDasharray="4 4" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="low" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="medium" stackId="a" fill="#ffc658" />
+          <Bar dataKey="high" stackId="a" fill="#ff7300" />
+          <Bar dataKey="critical" stackId="a" fill="#d32f2f" />
+        </BarChart>
+      </ResponsiveContainer>
+    </>
+  );
 };
