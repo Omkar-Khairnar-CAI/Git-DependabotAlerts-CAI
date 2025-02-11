@@ -616,7 +616,7 @@ export const StackedBarChart = (props) => {
       },
     },
   ];
-  // const param = "scope";
+  // const param = "scope"; 
   const stackedBarChartData = mapToStackedBarChartData(alerts, param);
   console.log("Data @ stackedbarchart", stackedBarChartData);
 
