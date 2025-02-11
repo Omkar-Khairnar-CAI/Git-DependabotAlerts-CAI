@@ -8,3 +8,4 @@ export {AlertsPage} from './alertsPage';
 export {AlertCard} from './alertCard';
 export {MinimalisticView} from './minimalisticView';
 export {ChartContainer} from './chartContainer';
+export {MainDashboardContainer} from './mainDashboardContainer';

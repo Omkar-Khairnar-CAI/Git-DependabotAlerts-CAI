@@ -34,10 +34,11 @@ export const PieChartComponent = (props) => {
   return (
     <div>
       <Box>Heading</Box>
+      <ResponsiveContainer width={width} height={height}>
       <PieChart width={width} height={height}>
         <Pie
           data={data}
-          cx="70%"
+          cx="50%"
           cy="50%"
           labelLine={false}
           label={renderCustomizedLabel}
@@ -51,6 +52,7 @@ export const PieChartComponent = (props) => {
         </Pie>
         <Tooltip/>
       </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };

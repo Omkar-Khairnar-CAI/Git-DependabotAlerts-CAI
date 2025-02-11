@@ -7,9 +7,8 @@ const {data, height, width, margin, } = props
   return (
     <div>
       <Box>Heading</Box>
+      <ResponsiveContainer width={width} height={height}>
        <LineChart
-          width={width}
-          height={height}
           data={data}
           margin={{
             top: margin?.top || 10,
@@ -26,6 +25,7 @@ const {data, height, width, margin, } = props
           <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
           <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
         </LineChart>
+        </ResponsiveContainer>
     </div>
   )
 }

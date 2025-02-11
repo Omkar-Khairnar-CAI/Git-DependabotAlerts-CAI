@@ -1,13 +1,11 @@
 import React from "react";
-import { ChartContainer } from "../../containers";
-import { TopBar } from "../../containers/index";
-
+import { MainDashboardContainer, TopBar } from "../../containers";
 
 export const Dashboard = () => {
   return (
     <>
-    <TopBar/>
-      <ChartContainer />
+      <TopBar />
+      <MainDashboardContainer />
     </>
   );
 };

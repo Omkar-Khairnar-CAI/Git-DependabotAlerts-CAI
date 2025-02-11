@@ -104,32 +104,36 @@ export const ChartContainer = () => {
     },
   ];
 
+  
+
   return (
     <SimpleGrid
       columns={{ base: 1, md: 2 }}
       spacing={4}
       width="90%"
-      marginTop="5%"
+      marginTop="70px"
       marginX="5%"
     >
       <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <StackedBarChart data={stackedBarChartData} height={260} width={600} />
+        <StackedBarChart data={stackedBarChartData} height={260} width={'100%'} />
       </Box>
       <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <LineChartComponent data={lineChartData} height={260} width={600} />
+        <LineChartComponent data={lineChartData} height={260} width={'100%'} />
       </Box>
       <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <ScatterChartComponent height={260} width={600} />
+        <ScatterChartComponent height={260} width={'100%'} />
       </Box>
       <Box border="1px solid #ccc" borderRadius="md" p={3}>
         <PieChartComponent
           data={pieChartData}
           height={260}
-          width={400}
+          width={'100%'}
           radius={100}
           colors={pieChartColors}
         />
       </Box>
     </SimpleGrid>
+
+
   );
 };

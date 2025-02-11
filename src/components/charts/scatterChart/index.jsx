@@ -136,6 +136,7 @@ export const ScatterChartComponent = (props) => {
   return (
     <>
     <Box>Heading</Box>
+          <ResponsiveContainer width={width} height={height}>
       <ScatterChart
         width={width}
         height={height}
@@ -157,6 +158,7 @@ export const ScatterChartComponent = (props) => {
         <Scatter name="High" data={data03} fill="#DA0100" />
         <Scatter name="Critical" data={data04} fill="#FFA500" />
       </ScatterChart>
+      </ResponsiveContainer>
       </>
   )
 }

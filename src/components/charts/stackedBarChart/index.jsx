@@ -2,15 +2,16 @@ import { Box } from '@chakra-ui/react';
 import React, { useEffect, PureComponent } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-export const StackedBarChart  = (props) => {
+export const StackedBarChart  = (props) => { 
   const {data, height, width, margin, XAxisKey, YAxisKey } = props
 
   return (
    <>
-    <Box >Heading</Box>
+    <Box>Heading</Box>
+    <ResponsiveContainer width={width} height={height}>
         <BarChart
-          width={width}
-          height={height}
+          // width={width}
+          // height={height}
           data={data}
           margin={{
             top: margin?.top || 10,
@@ -28,7 +29,7 @@ export const StackedBarChart  = (props) => {
           <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
         </BarChart>
     
-
+        </ResponsiveContainer>
    
    </>
   )

@@ -1,16 +1,19 @@
-import React from 'react'
+import React from "react";
 import { Box, IconButton, Text, Icon, Flex, useTheme } from "@chakra-ui/react";
-import { GithubIcon } from "../../assets/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { ToggleButton } from '../../components/index';
+import { ToggleButton } from "../../components/index";
 
-
-// this is the complete top box - contains heading 
-export const TopBar = ({ handleSideBarToggle, isSidebarOpen, isToggled, setIsToggled }) => {
+// this is the complete top box - contains heading
+export const TopBar = ({
+  handleSideBarToggle,
+  isSidebarOpen,
+  isToggled,
+  setIsToggled,
+}) => {
   const theme = useTheme();
-  const onToggle = () =>{
+  const onToggle = () => {
     handleSideBarToggle();
-  } 
+  };
   return (
     <Box
       bg={theme.colors.primary.light}
@@ -22,8 +25,7 @@ export const TopBar = ({ handleSideBarToggle, isSidebarOpen, isToggled, setIsTog
       p={4}
       display="flex"
       alignItems="center"
-      boxShadow={'xl'}
-       
+      boxShadow={"xl"}
     >
       <IconButton
         icon={isSidebarOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -31,34 +33,35 @@ export const TopBar = ({ handleSideBarToggle, isSidebarOpen, isToggled, setIsTog
         bg="transparent"
         _hover={{ bg: "rgba(0,0,0,0.1)" }}
         display={{ sm: "block", md: "none" }}
-        color={'white'}
+        color={"white"}
         mr={4}
       />
-      <Flex justifyContent="space-between" alignItems="center"   width={'100%'}>
-
-      
-      <Text
-        as="h2"
-        fontSize="lg"
-        fontWeight="bold"
-        display="flex"
-        color='white'
-        alignItems={'center'}
-        justifyContent={'center'}
-        mt={0}
+      <Flex justifyContent="space-between" alignItems="center" width={"100%"}>
+        <Text
+          as="h2"
+          fontSize="lg"
+          fontWeight="bold"
+          display="flex"
+          color="white"
+          alignItems={"center"}
+          justifyContent={"center"}
+          mt={0}
         >
-       <Icon as={GithubIcon} boxSize={5} mr={2} color={'white'}/>
-        Dependabot Alerts
-      </Text>
+          <Box boxSize={12} mr={2}>
+            <img
+              src="https://www.caistack.com/images/logo/CAIStack_logo.svg"
+              alt=""
+            />
+          </Box>
 
+          {import.meta.env.VITE_ORGANIZATION_NAME}
+        </Text>
 
         {/* //toggle  */}
-        <Box >
-        <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled}/>
+        <Box>
+          <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled} />
         </Box>
-        </Flex>
+      </Flex>
     </Box>
-  )
-}
-
-
+  );
+};
