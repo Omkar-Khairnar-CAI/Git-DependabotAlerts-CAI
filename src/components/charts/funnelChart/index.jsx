@@ -1,18 +1,12 @@
-import { Box, Flex, Input, NumberInput, NumberInputField, Text } from "@chakra-ui/react";
+import { Box, Flex, Select, Switch, Text } from "@chakra-ui/react";
+import { ResponsiveFunnel } from "@nivo/funnel";
 import React, { useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { mapToLineChartData } from "../../../utils/dataModel";
+import { ResponsiveContainer } from "recharts";
+import { mapToFunnelChartData } from "../../../utils/dataModel";
 
-export const LineChartComponent = ({ height, width, margin }) => {
+export const FunnelChartComponent = ({ height, width }) => {
+  const [dir, setDir] = useState("horizontal");
+  const [prevDays, setPrevDays] = useState("7");
   const alerts = [
     {
       number: 2,
@@ -611,51 +605,87 @@ export const LineChartComponent = ({ height, width, margin }) => {
       },
     },
   ];
-  const [selectedYear, setSelectedYear] = useState(2023);
-  // Transform alert data for the line chart
-  const lineChartData = mapToLineChartData(alerts, "ecosystem", selectedYear);
-  // console.log("Data @ line chart", lineChartData);
+    const [selectedYear, setSelectedYear] = useState(null);
+    const currentYear = new Date().getFullYear();
+    const yearOptions = Array.from({ length: 4 }, (_, i) => currentYear - 2 - i);
+    const handleOptionChange = (e) => {
+        const value = e.target.value;
+        if (value === "current") {
+          setSelectedYear(null);
+          setPrevDays("365");
+        } else {
+          setSelectedYear(parseInt(value));
+          setPrevDays((currentYear - parseInt(value)) * 365);
+        }
+      };
+    const data = mapToFunnelChartData(alerts, prevDays, "created_at", selectedYear);
+//   console.log("funnel data", data);
 
   return (
-    <div>
-      <Box>
-        <Flex justify="space-between" align="center" mb={4} width={width}>
-          <Text fontSize="lg" fontWeight="bold">
-            Alerts Trend - {selectedYear}
-          </Text>
-          <Input
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            min={2016}
-            max={2025}
-            w="200px"
-            size="md"
-            placeholder="Choose the year"
-            type="number"
-          />
+    <Box p={4} bg="gray.50" borderRadius="md" boxShadow="md">
+      <Flex justifyContent="space-between" alignItems="center" mb={4}>
+        <Text fontSize="xl" fontWeight="bold">Alerts Funnel Chart</Text>
+        <Flex gap={2}>
+          <Select
+            value={selectedYear || "current"}
+            onChange={handleOptionChange}
+            width="150px"
+            bg="white"
+            borderRadius="md"
+            boxShadow="sm"
+          >
+            <option value="current">Current Year</option>
+            {yearOptions.map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </Select>
+          <Select
+            value={prevDays}
+            onChange={(e) => {
+              setPrevDays(e.target.value);
+              if (e.target.value !== "365") setSelectedYear(null);
+            }}
+            width="200px"
+            bg="white"
+            borderRadius="md"
+            boxShadow="sm"
+            isDisabled={selectedYear !== null}
+          >
+            <option value="7">Last 7 Days</option>
+            <option value="28">Last 28 Days</option>
+            <option value="90">Last 3 Months</option>
+            <option value="180">Last 6 Months</option>
+            <option value="365">Last Year</option>
+          </Select>
         </Flex>
-      </Box>
+      </Flex>
+
+      <Flex alignItems="center" justifyContent="center" mb={4}>
+        <Text mr={2}>Vertical View</Text>
+        <Switch onChange={(e) => setDir(e.target.checked ? "vertical" : "horizontal")} />
+      </Flex>
+
       <ResponsiveContainer width={width} height={height}>
-        <LineChart
-          data={lineChartData}
-          margin={{
-            top: margin?.top || 10,
-            right: margin?.right || 30,
-            left: margin?.left || 20,
-            bottom: margin?.bottom || 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="low" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="medium" stroke="#8884d8" />
-          <Line type="monotone" dataKey="high" stroke="#ffcc00" />
-          <Line type="monotone" dataKey="critical" stroke="#ff0000" />
-        </LineChart>
+        <ResponsiveFunnel
+          data={data}
+          margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+          direction={dir}
+          shapeBlending={0.7}
+          spacing={2}
+          valueFormat=">-.4s"
+          colors={{ scheme: "pastel1" }}
+          borderWidth={8}
+          borderOpacity={0.6}
+          labelColor={{ from: "color", modifiers: [["darker", 3]] }}
+          beforeSeparatorLength={50}
+          beforeSeparatorOffset={20}
+          afterSeparatorLength={50}
+          afterSeparatorOffset={20}
+          currentPartSizeExtension={10}
+          currentBorderWidth={40}
+          motionConfig="molasses"
+        />
       </ResponsiveContainer>
-    </div>
+    </Box>
   );
 };
