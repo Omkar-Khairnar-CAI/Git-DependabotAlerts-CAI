@@ -284,12 +284,12 @@ export const mapToFunnelChartData = (
   const now = dayjs();
   let data = [];
 
-  // For previous years, always show full year data
+  // For previous years
   if (selectedYear) {
     const startDate = dayjs(`${selectedYear}-01-01`);
     const endDate = dayjs(`${selectedYear}-12-31`);
 
-    // Filter alerts for selected year
+    // alerts for selected year
     const yearAlerts = alerts.filter((alert) => {
       const alertDate = dayjs(getValue(alert, dateKey));
       return alertDate.year() === selectedYear;
@@ -301,7 +301,7 @@ export const mapToFunnelChartData = (
       ];
     }
 
-    // Always return 12 months for previous years
+    // by def,return 12 months for previous years
     data = Array.from({ length: 12 }, (_, i) => {
       const date = startDate.add(i, "month");
       return {
@@ -319,7 +319,6 @@ export const mapToFunnelChartData = (
     return data;
   }
 
-  // Handle current year with different time periods
   const referenceDate = now;
   const currentYearAlerts = alerts.filter(
     (alert) => dayjs(getValue(alert, dateKey)).year() === now.year()

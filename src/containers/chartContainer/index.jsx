@@ -116,23 +116,24 @@ export const ChartContainer = () => {
       marginX="5%"
     >
       <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <StackedBarChart data={stackedBarChartData} height={260} width={'100%'} />
-      </Box>
-      <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <LineChartComponent data={lineChartData} height={260} width={'100%'} />
-      </Box>
-      <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        {/* <ScatterChartComponent height={260} width={'100%'} /> */}
-        <FunnelChartComponent height={350} width={'100%'}/>
-      </Box>
-      <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <PieChartComponent
+      <PieChartComponent
           data={pieChartData}
           height={260}
           width={'100%'}
           radius={100}
           colors={pieChartColors}
         />
+      </Box>
+      <Box border="1px solid #ccc" borderRadius="md" p={3}>
+        <LineChartComponent data={lineChartData} height={260} width={'100%'} />
+      </Box>
+      <Box border="1px solid #ccc" borderRadius="md" p={2}>
+        {/* <ScatterChartComponent height={260} width={'100%'} /> */}
+        <FunnelChartComponent height={300} width={'100%'}/>
+      </Box>
+      <Box border="1px solid #ccc" borderRadius="md" p={3}>
+        
+        <StackedBarChart data={stackedBarChartData} height={300} width={'100%'} />
       </Box>
     </SimpleGrid>
 

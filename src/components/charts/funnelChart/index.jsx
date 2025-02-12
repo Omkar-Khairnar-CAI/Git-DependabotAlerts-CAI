@@ -622,14 +622,14 @@ export const FunnelChartComponent = ({ height, width }) => {
 //   console.log("funnel data", data);
 
   return (
-    <Box p={4} bg="gray.50" borderRadius="md" boxShadow="md">
-      <Flex justifyContent="space-between" alignItems="center" mb={4}>
-        <Text fontSize="md" fontWeight="bold">Alerts Funnel Chart</Text>
-        <Flex gap={2} width={"70%"}>
+    <Box p={4} borderRadius="md" boxShadow="md">
+      <Text fontSize="lg" fontWeight="bold">Alerts Timeline</Text>
+      <Flex justifyContent="space-between" alignItems="center" mb={1}>
+        <Flex gap={2} width={"78%"} alignItems={"center"}>
           <Select
             value={selectedYear || "current"}
             onChange={handleOptionChange}
-            width="35%"
+            width="32%"
             bg="white"
             borderRadius="md"
             boxShadow="sm"
@@ -645,7 +645,7 @@ export const FunnelChartComponent = ({ height, width }) => {
               setPrevDays(e.target.value);
               if (e.target.value !== "365") setSelectedYear(null);
             }}
-            width="35%"
+            width="32%"
             bg="white"
             borderRadius="md"
             boxShadow="sm"
@@ -657,13 +657,13 @@ export const FunnelChartComponent = ({ height, width }) => {
             <option value="180">Last 6 Months</option>
             <option value="365">Last Year</option>
           </Select>
+          <Flex alignItems="center" justifyContent="center" >
+            <Text  fontSize="xs" mr={1}>Vertical View</Text>
+            <Switch onChange={(e) => setDir(e.target.checked ? "vertical" : "horizontal")} />
+          </Flex>
         </Flex>
       </Flex>
 
-      <Flex alignItems="center" justifyContent="center" mb={4}>
-        <Text mr={2}>Vertical View</Text>
-        <Switch onChange={(e) => setDir(e.target.checked ? "vertical" : "horizontal")} />
-      </Flex>
 
       <ResponsiveContainer width={width} height={height}>
         <ResponsiveFunnel
@@ -672,7 +672,7 @@ export const FunnelChartComponent = ({ height, width }) => {
           direction={dir}
           shapeBlending={0.7}
           spacing={2}
-          valueFormat=">-.4s"
+          valueFormat=">-.1s"
           colors={{ scheme: "pastel1" }}
           borderWidth={8}
           borderOpacity={0.6}
