@@ -74,7 +74,7 @@ export const TopBar = ({
           <Link
             to="/"
             style={{
-              textDecoration: "none",
+              textDecoration: location.pathname.split('/')[2] === undefined ? 'underline' : '',
               color: "white",
               transition: "color 0.3s",
             }}
@@ -84,7 +84,7 @@ export const TopBar = ({
           <Link
             to="/repos"
             style={{
-              textDecoration: "none",
+              textDecoration: location.pathname.split('/')[1] === 'repos' ? 'underline' : '',
               color: "white",
               transition: "color 0.3s",
             }}
@@ -94,7 +94,7 @@ export const TopBar = ({
         </Box>
 
         {location.pathname.split("/")[1] === "repos" && (
-          <Box position={"absolute"} right={10} top={2}>
+          <Box position={"absolute"} right={5} top={2}>
             <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled} />
           </Box>
         )}

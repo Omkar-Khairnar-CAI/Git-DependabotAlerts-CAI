@@ -12,7 +12,6 @@ import {
   Text,
   Box,
   useTheme,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon, ChatIcon, EditIcon } from "@chakra-ui/icons";
 import { AlertTableButton, Loader } from "../index";
@@ -41,10 +40,8 @@ export const AlertTable = ({
       overflowY="auto"
       overflowX="auto"
       height="max-content"
-      // maxW={"80vh"}
-      w={"100%"}
-      // maxW={"100%"}
-      maxH={{ base: "70vh", md: "80vh", lg: "77vh" }} // Responsive height for the table container
+      w={"77vw"}
+      maxH={{ base: "70vh", md: "80vh", lg: "77vh" }} 
     >
       {!isLoading && (!alerts || alerts.length === 0) ? (
         <Flex p={8}>
@@ -55,11 +52,9 @@ export const AlertTable = ({
       ) : (
         <Table
           variant="interactive"
-          
           size={{ base: "xs", md: "sm", lg: "md" }}
           fontSize={{ base: "xs", md: "sm", lg: "md" }}
-          width="100%"
-          overflowX={"auto"}
+   
         >
           <Thead
             bgColor={theme.colors.primary.light}

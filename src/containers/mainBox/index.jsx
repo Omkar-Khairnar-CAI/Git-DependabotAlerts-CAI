@@ -132,12 +132,12 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
         <GridItem
           height={"30px"}
           position="sticky"
-          top={{ sm: "6%", md: "6%", lg: "6%" }}
+          top={{ sm: "6%", md: "6%", lg: "8%" }}
           bg={"white"}
         ></GridItem>
         <GridItem
           position="sticky"
-          top={{ base: "9%", md: "10%", lg: "9%" }}
+          top={{ base: "9%", md: "10%", lg: "12%" }}
           bg="white"
           mb={{ base: "10px", md: "15px" }}
         >

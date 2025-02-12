@@ -31,7 +31,7 @@ export const Filters = ({ filters, setFilters, filterResults }) => {
   return (
     <Box position="relative" h="100%" w="100%" >
       {/* Button to open the drawer */}
-      <Button onClick={onOpen} rightIcon={<ChevronDownIcon />}>
+      <Button onClick={onOpen} rightIcon={<ChevronDownIcon />} position={'relative'} right={2}>
         Filters
       </Button>
 

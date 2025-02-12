@@ -50,6 +50,7 @@ export const AlertCard = ({ alert }) => {
     <Box
       p={5}
       shadow="md"
+      width={'99%'}
       borderWidth="1px"
       borderRadius="md"
       cursor="pointer"

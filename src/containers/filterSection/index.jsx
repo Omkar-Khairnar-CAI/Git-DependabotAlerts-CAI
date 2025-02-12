@@ -58,7 +58,7 @@ export const FilterSection = ({modifyQueryParams, filterResultsBasedOnSearchQuer
      
   return (
     <Box bgColor='white'>
-       <HStack className="search-filter" spacing={2} >
+       <HStack className="search-filter" spacing={3} >
           <SearchBar
             placeholder={"Search by Summary..."}
             searchQuery={searchQuery}
