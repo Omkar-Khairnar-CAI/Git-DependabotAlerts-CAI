@@ -624,12 +624,12 @@ export const FunnelChartComponent = ({ height, width }) => {
   return (
     <Box p={4} bg="gray.50" borderRadius="md" boxShadow="md">
       <Flex justifyContent="space-between" alignItems="center" mb={4}>
-        <Text fontSize="xl" fontWeight="bold">Alerts Funnel Chart</Text>
-        <Flex gap={2}>
+        <Text fontSize="md" fontWeight="bold">Alerts Funnel Chart</Text>
+        <Flex gap={2} width={"70%"}>
           <Select
             value={selectedYear || "current"}
             onChange={handleOptionChange}
-            width="150px"
+            width="35%"
             bg="white"
             borderRadius="md"
             boxShadow="sm"
@@ -645,7 +645,7 @@ export const FunnelChartComponent = ({ height, width }) => {
               setPrevDays(e.target.value);
               if (e.target.value !== "365") setSelectedYear(null);
             }}
-            width="200px"
+            width="35%"
             bg="white"
             borderRadius="md"
             boxShadow="sm"
