@@ -2,7 +2,6 @@ import { Box, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { TopBar, SideBar, MainBox } from "../../containers/index";
 
-
 export const Home = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentActiveRepo, setCurrentActiveRepo] = useState("");
@@ -19,6 +18,8 @@ export const Home = () => {
   const handleToggleView = () => {
      setToggleView(!toggleView);
   }
+
+  
   return (
     <Box>
       <TopBar 
@@ -26,6 +27,7 @@ export const Home = () => {
         isSidebarOpen={isSidebarOpen}
         isToggled={isToggled}
         setIsToggled={setIsToggled}
+        currentActiveRepo={currentActiveRepo}
       />
       <SideBar
         isSidebarOpen={isSidebarOpen}

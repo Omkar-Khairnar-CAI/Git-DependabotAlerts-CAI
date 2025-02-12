@@ -19,9 +19,7 @@ const getData = async ({ endpoint, params = {}, headers = {}, method = "GET" }) 
     });
 
     return { error: false, data: response.data };
-  } catch (error) {
-    console.log(error);
-    
+  } catch (error) {    
     if (error.response) {
       return { error: true, msg: error.response.data.message || "Error occurred", statusCode: error.response.status };
     }

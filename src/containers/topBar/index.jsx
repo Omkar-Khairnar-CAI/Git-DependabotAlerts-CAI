@@ -2,6 +2,7 @@ import React from "react";
 import { Box, IconButton, Text, Icon, Flex, useTheme } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { ToggleButton } from "../../components/index";
+import { Link, useLocation } from "react-router-dom";
 
 // this is the complete top box - contains heading
 export const TopBar = ({
@@ -9,11 +10,14 @@ export const TopBar = ({
   isSidebarOpen,
   isToggled,
   setIsToggled,
+  currentActiveRepo,
 }) => {
   const theme = useTheme();
+  const location = useLocation();
   const onToggle = () => {
     handleSideBarToggle();
   };
+
   return (
     <Box
       bg={theme.colors.primary.light}
@@ -36,7 +40,7 @@ export const TopBar = ({
         color={"white"}
         mr={4}
       />
-      <Flex justifyContent="space-between" alignItems="center" width={"100%"}>
+      <Flex width={"100%"}>
         <Text
           as="h2"
           fontSize="lg"
@@ -57,10 +61,43 @@ export const TopBar = ({
           {import.meta.env.VITE_ORGANIZATION_NAME}
         </Text>
 
-        {/* //toggle  */}
-        <Box>
-          <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled} />
+        <Box
+          position="absolute"
+          left="45%"
+          top={5}
+          color="white"
+          fontSize="lg"
+          fontWeight="bold"
+          display="flex"
+          gap={4} 
+        >
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              transition: "color 0.3s",
+            }}
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/repos"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              transition: "color 0.3s",
+            }}
+          >
+            Repos
+          </Link>
         </Box>
+
+        {location.pathname.split("/")[1] === "repos" && (
+          <Box position={"absolute"} right={10} top={2}>
+            <ToggleButton isToggled={isToggled} setIsToggled={setIsToggled} />
+          </Box>
+        )}
       </Flex>
     </Box>
   );

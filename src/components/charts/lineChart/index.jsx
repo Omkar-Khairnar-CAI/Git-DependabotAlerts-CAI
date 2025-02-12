@@ -606,7 +606,6 @@ export const LineChartComponent = ({  height, width, margin,  }) => {
   const [selectedYear, setSelectedYear] = useState(2023)
   // Transform alert data for the line chart
   const lineChartData = mapToLineChartData(alerts, "ecosystem", selectedYear);
-  console.log("Data @ line chart", lineChartData);
 
   return (
     <div>

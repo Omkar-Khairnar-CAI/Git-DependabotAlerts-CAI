@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, useTheme } from "@chakra-ui/react";
 import {getTableData} from '../../utils/dataModel'
+import { useNavigate } from "react-router-dom";
 
 
 const alerts = [
@@ -601,8 +602,10 @@ const alerts = [
     },
   },
 ];
-export const DashboardTable = ({  }) => {
+
+export const DashboardTable = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [data, setData] = useState([])
 
   const getData = ()=>{
@@ -637,9 +640,10 @@ useEffect(()=>{
         </Thead>
         <Tbody>
           {data?.map((repo) => (
-            <Tr key={repo.name}>
-              
-              <Td style={{cursor:'pointer' }}><a href={`../repos/${repo.name }`} >{repo.name}</a></Td>
+            <Tr key={repo.name}> 
+              <Td style={{cursor:'pointer' }} onClick={()=>{
+                navigate(`/repos/${repo.name}`)
+              }}>{repo.name}</Td>
               <Td >{repo.totalAlerts}</Td>
               <Td >{repo.critical}</Td>
               <Td >{repo.high}</Td>

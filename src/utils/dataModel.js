@@ -34,7 +34,6 @@ export const getValue = (alert, param) => {
   }
 };
 
-// return array of graph data points
 export const mapToGraphData = (alerts, param1, param2, param3 = null) => {
     return alerts.map(alert => {
 
@@ -42,7 +41,7 @@ export const mapToGraphData = (alerts, param1, param2, param3 = null) => {
         const y = getValue(alert, param2);
         const z = param3 ? getValue(alert, param3) : null;
 
-        return param3 ? { x, y, z } : { x, y };// return object with x, y and z values
+        return param3 ? { x, y, z } : { x, y }; 
     });
 }
 
@@ -138,7 +137,6 @@ export const mapToStackedBarChartData = (alerts, param) => {
     };
 
     export const mapToLineChartData = (alerts, param, selectedYear) => {
-        console.log(selectedYear);
         const allMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         
         // Initialize with default values
@@ -169,76 +167,73 @@ export const mapToStackedBarChartData = (alerts, param) => {
     };
 
 
-    export const mapPieChartData = (alerts, param) => {
-        const groupedData = {};
-      
-        alerts.forEach((alert) => {
-          const paramVal = getValue(alert, param) || "Unknown"; 
-      
-          if (!groupedData[paramVal]) {
-            groupedData[paramVal] = 0;
-          }
-      
-          groupedData[paramVal] += 1;
-        });
-      
-        const pieChartData = Object.entries(groupedData).map(([name, value]) => ({
-          name,
-          value,
-        }));
-      
-        return pieChartData;
-      };
-      
-      
-      export const getTableData = (alerts)=>{
-          const groupedData={};
-          alerts.forEach((alert)=>{
-              if(!groupedData[alert.repository.name]){
-                  groupedData[alert.repository.name]={
-                      name:alert.repository.name,
-                      totalAlerts:0,
-                      critical:0,
-                      low:0,
-                      medium:0,
-                      high:0,
-                      lastUpdated:''
-                  }
-              }
-              groupedData[alert.repository.name].totalAlerts += 1;
-              const severity = (getValue(alert, "severity") || "").toLowerCase();
-              switch (severity) {
-                  case "low":
-                    groupedData[alert.repository.name].low += 1;
-                    break;
-                  case "medium":
-                    groupedData[alert.repository.name].medium += 1;
-                    break;
-                  case "high":
-                    groupedData[alert.repository.name].high += 1;
-                    break;
-                  case "critical":
-                    groupedData[alert.repository.name].critical += 1;
-                    break;
-                  default:
-                    console.warn(`Unknown severity level: ${severity}`);
-                    break;
-                }
-      
-                if(groupedData[alert.repository.name].lastUpdated ===''){
-                  groupedData[alert.repository.name].lastUpdated = new Date(alert.updated_at).toLocaleString();
-                }
-                else if(new Date(alert.updated_at) > new Date(groupedData[alert.repository.name].lastUpdated)){
-                  groupedData[alert.repository.name].lastUpdated = new Date(alert.updated_at).toLocaleString();
-                } 
-          })
-      
-          const data = Object.entries(groupedData).map(([name, value])=>{
-              return value
-          })
-      
-          return data;
-      }
+export const mapPieChartData = (alerts, param) => {
+  const groupedData = {};
 
-    
-    
+  alerts.forEach((alert) => {
+    const paramVal = getValue(alert, param) || "Unknown"; 
+
+    if (!groupedData[paramVal]) {
+      groupedData[paramVal] = 0;
+    }
+
+    groupedData[paramVal] += 1;
+  });
+
+  const pieChartData = Object.entries(groupedData).map(([name, value]) => ({
+    name,
+    value,
+  }));
+
+  return pieChartData;
+};
+
+
+export const getTableData = (alerts)=>{
+    const groupedData={};
+    alerts.forEach((alert)=>{
+        if(!groupedData[alert.repository.name]){
+            groupedData[alert.repository.name]={
+                name:alert.repository.name,
+                totalAlerts:0,
+                critical:0,
+                low:0,
+                medium:0,
+                high:0,
+                lastUpdated:''
+            }
+        }
+        groupedData[alert.repository.name].totalAlerts += 1;
+        const severity = (getValue(alert, "severity") || "").toLowerCase();
+        switch (severity) {
+            case "low":
+              groupedData[alert.repository.name].low += 1;
+              break;
+            case "medium":
+              groupedData[alert.repository.name].medium += 1;
+              break;
+            case "high":
+              groupedData[alert.repository.name].high += 1;
+              break;
+            case "critical":
+              groupedData[alert.repository.name].critical += 1;
+              break;
+            default:
+              console.warn(`Unknown severity level: ${severity}`);
+              break;
+          }
+
+          if(groupedData[alert.repository.name].lastUpdated ===''){
+            groupedData[alert.repository.name].lastUpdated = new Date(alert.updated_at).toLocaleString();
+          }
+          else if(new Date(alert.updated_at) > new Date(groupedData[alert.repository.name].lastUpdated)){
+            groupedData[alert.repository.name].lastUpdated = new Date(alert.updated_at).toLocaleString();
+          } 
+    })
+
+    const data = Object.entries(groupedData).map(([name, value])=>{
+        return value
+    })
+
+    return data;
+}

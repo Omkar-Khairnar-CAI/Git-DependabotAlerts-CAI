@@ -69,7 +69,6 @@ export const MiniAlertContainer = ({ REPO_NAME }) => {
   const fetchAlerts = async (filters = {}, page = 1) => {
     setLoading(true);
     try {
-      console.log("Fetching alerts with filters:", filters);
       const params = {
         page,
         per_page: 10,

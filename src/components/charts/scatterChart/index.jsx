@@ -520,7 +520,6 @@ export const ScatterChartComponent = ({height, width}) => {
     },
   ]
   const data01 = mapToGraphData(alerts, "cvss_v3_score", "cvss_v4_score", "cvss_score");
-  console.log(data01);
   return (
     <>
     <Box>Heading</Box>

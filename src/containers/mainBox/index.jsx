@@ -4,6 +4,7 @@ import getGitData from "../../utils/getGitData";
 import { Loader, Error } from "../../components/index";
 import { FilterSection, MinimalisticView } from "../index";
 import { AlertsPage } from "../index";
+import { use } from "react";
 
 const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER;
 
@@ -31,6 +32,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
   const getAlertsData = async (currentPage) => {
     try {
       if (REPO_NAME) {
+        
         setIsLoading(true);
         const params = {
           ...queryParams,
@@ -66,6 +68,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
       setIsLoading(false);
     }
   };
+  
 
   const filterResultsBasedOnSearchQuery = (searchQuery) => {
     if (searchQuery) {

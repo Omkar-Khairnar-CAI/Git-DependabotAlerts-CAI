@@ -2,6 +2,8 @@ import { Box, Text, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Loader, SearchBar, SideBarItem } from "../../components/index";
 import getGitData from "../../utils/getGitData";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER;
 
@@ -13,6 +15,8 @@ export const SideBar = ({
   setCurrentActiveRepo,
   handleSideBarToggle,
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [filteredRepos, setFilteredRepos] = useState([]);
   const [repos, setRepos] = useState([]);
   const [searchtext, setSearchtext] = useState("");
@@ -29,7 +33,10 @@ export const SideBar = ({
     const res = await getGitData({ endpoint: `users/${GITHUB_OWNER}/repos` });
     setRepos(res.data);
     setFilteredRepos(res.data);
-    setCurrentActiveRepo(res.data.length > 0 ? res.data[0].name : "");
+    if(location.pathname.split('/')[1] === 'repos' && location.pathname.split('/')[2] === undefined){
+      navigate(`/repos/${res.data.length > 0 ? res.data[0].name : ""}`)
+      setCurrentActiveRepo(res.data.length > 0 ? res.data[0].name : "");
+    }
   };
 
   useEffect(() => {
@@ -37,12 +44,19 @@ export const SideBar = ({
   }, []);
 
   const handleItemClick = (item) => {
-    setCurrentActiveRepo(item.name);
+    navigate(`/repos/${item.name}`)
     //Toggle only for small screen
     if (window.innerWidth < 768) {
       handleSideBarToggle();
     }
   };
+
+  useEffect(() => {
+    if(location.pathname.split('/')[1] === 'repos' && location.pathname.split('/')[2] !== undefined){
+      setCurrentActiveRepo(location.pathname.split('/')[2]);
+    }
+  },[location])
+
   useEffect(()=>{
     if(window.innerWidth > 768){
       setIsSidebarOpen(true);      

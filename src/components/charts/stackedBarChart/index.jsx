@@ -625,7 +625,6 @@ const possibleValuesMap = {
 const possibleValues = possibleValuesMap[param] || [];
 
 const stackedBarChartData = mapToStackedBarChartData2(alerts, param);
-console.log("Data @ stackedbarchart", stackedBarChartData);
 
 const colorScheme = ["#82ca9d", "#ffc658", "#ff7300", "#d32f2f", "#8884d8"];
 
