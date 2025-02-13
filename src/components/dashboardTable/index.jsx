@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, useTheme } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, useTheme, GridItem } from "@chakra-ui/react";
 import {getTableData} from '../../utils/dataModel'
 import { useNavigate } from "react-router-dom";
 
@@ -151,7 +151,7 @@ const alerts = [
     repository: {
       id: 217723378,
       node_id: "MDEwOlJlcG9zaXRvcnkyMTc3MjMzNzg=",
-      name: "octo-repo",
+      name: "FitWell",
       full_name: "octo-org/octo-repo",
       owner: {
         login: "octo-org",
@@ -372,7 +372,7 @@ const alerts = [
     repository: {
       id: 664700648,
       node_id: "MDEwOlJlcG9zaXRvcnk2NjQ3MDA2NDg=",
-      name: "hello-world",
+      name: "FitWellReactJS",
       full_name: "octo-org/hello-world",
       owner: {
         login: "octo-org",
@@ -637,12 +637,12 @@ useEffect(()=>{
             <Th >Low</Th>
             <Th>Last Updated</Th>
           </Tr>
-        </Thead>
+        </Thead> 
         <Tbody>
           {data?.map((repo) => (
             <Tr key={repo.name}> 
               <Td style={{cursor:'pointer' }} onClick={()=>{
-                navigate(`/repos/${repo.name}`)
+                navigate(`/repos/${repo.name}`, { state: repo.name })
               }}>{repo.name}</Td>
               <Td >{repo.totalAlerts}</Td>
               <Td >{repo.critical}</Td>

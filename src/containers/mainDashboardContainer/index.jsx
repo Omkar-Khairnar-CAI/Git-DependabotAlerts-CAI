@@ -14,7 +14,7 @@ export const MainDashboardContainer = () => {
   return (
     <div>
         <ChartContainer/>
-        <DashboardTable data={items}/>
+        <DashboardTable data={items} />
     </div>
   )
 }

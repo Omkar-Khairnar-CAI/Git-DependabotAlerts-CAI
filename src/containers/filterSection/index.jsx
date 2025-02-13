@@ -11,7 +11,7 @@ import {Filters} from '../index'
 import { initialFiltersValues } from "../../utils/filterSchema";
 
 
-export const FilterSection = ({modifyQueryParams, filterResultsBasedOnSearchQuery}) => {
+export const FilterSection = ({setQueryParams, filterResultsBasedOnSearchQuery}) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [filters, setFilters] = useState(initialFiltersValues);
    
@@ -38,7 +38,7 @@ export const FilterSection = ({modifyQueryParams, filterResultsBasedOnSearchQuer
 
       const filterResults = async(tempFilters) => {
         const queryParams = constructParams(tempFilters);        
-        modifyQueryParams(queryParams);
+        setQueryParams(queryParams);
       };
     
       const debouncedFilterResults = useCallback(() => {

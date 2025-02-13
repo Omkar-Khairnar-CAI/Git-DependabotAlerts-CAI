@@ -650,7 +650,7 @@ return (
         <XAxis dataKey="repository" />
         <YAxis />
         <Tooltip />
-        <Legend />
+        <Legend iconType="circle" />
         
         {/* Dynamically render <Bar> components based on possible values */}
         {possibleValues.map((key, index) => (

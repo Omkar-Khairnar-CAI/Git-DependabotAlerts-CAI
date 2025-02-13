@@ -10,7 +10,6 @@ export const TopBar = ({
   isSidebarOpen,
   isToggled,
   setIsToggled,
-  currentActiveRepo,
 }) => {
   const theme = useTheme();
   const location = useLocation();

@@ -34,8 +34,8 @@ export const SideBar = ({
     setRepos(res.data);
     setFilteredRepos(res.data);
     if(location.pathname.split('/')[1] === 'repos' && location.pathname.split('/')[2] === undefined){
-      navigate(`/repos/${res.data.length > 0 ? res.data[0].name : ""}`)
-      setCurrentActiveRepo(res.data.length > 0 ? res.data[0].name : "");
+      navigate(`/repos/${res.data.length > 0 ? res.data[0].name : ""}`, {state: res.data.length > 0 ? res.data[0].name : ""});
+      // setCurrentActiveRepo(res.data.length > 0 ? res.data[0].name : "");
     }
   };
 
@@ -44,18 +44,14 @@ export const SideBar = ({
   }, []);
 
   const handleItemClick = (item) => {
-    navigate(`/repos/${item.name}`)
+    navigate(`/repos/${item.name}`, {state: item.name});
+    setCurrentActiveRepo(item.name)
     //Toggle only for small screen
     if (window.innerWidth < 768) {
       handleSideBarToggle();
     }
   };
 
-  useEffect(() => {
-    if(location.pathname.split('/')[1] === 'repos' && location.pathname.split('/')[2] !== undefined){
-      setCurrentActiveRepo(location.pathname.split('/')[2]);
-    }
-  },[location])
 
   useEffect(()=>{
     if(window.innerWidth > 768){

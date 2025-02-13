@@ -1,33 +1,34 @@
 import { Box, useBreakpointValue } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TopBar, SideBar, MainBox } from "../../containers/index";
+import { useLocation, useParams } from "react-router-dom";
 
 export const Home = () => {
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentActiveRepo, setCurrentActiveRepo] = useState("");
   const [isToggled, setIsToggled] = useState(true);
-  const marginLeft = useBreakpointValue({ base: "1%", md: "31%", lg: "19%" });
-  const paddingMainComponent = useBreakpointValue({
-    base: "2",
-    md: "10",
-    lg: "6",
-  });
+
   const handleSideBarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const handleToggleView = () => {
-     setToggleView(!toggleView);
-  }
+    setToggleView(!toggleView);
+  };
 
-  
+  useEffect(() => {
+    if (location.state) {
+      setCurrentActiveRepo(location.state);
+    }
+  }, [location]);
+
   return (
     <Box>
-      <TopBar 
+      <TopBar
         handleSideBarToggle={handleSideBarToggle}
         isSidebarOpen={isSidebarOpen}
         isToggled={isToggled}
         setIsToggled={setIsToggled}
-        currentActiveRepo={currentActiveRepo}
       />
       <SideBar
         isSidebarOpen={isSidebarOpen}
@@ -35,11 +36,14 @@ export const Home = () => {
         currentActiveRepo={currentActiveRepo}
         setCurrentActiveRepo={setCurrentActiveRepo}
         handleSideBarToggle={handleSideBarToggle}
-        
       />
 
-      <Box ml={marginLeft} p={paddingMainComponent}>
-        <MainBox REPO_NAME={currentActiveRepo} isToggled={isToggled}></MainBox>
+      <Box>
+        <MainBox
+          REPO_NAME={currentActiveRepo} 
+          setCurrentActiveRepo={setCurrentActiveRepo}
+          isToggled={isToggled}
+        ></MainBox>
       </Box>
     </Box>
   );

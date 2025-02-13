@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, useBreakpointValue } from "@chakra-ui/react";
 import getGitData from "../../utils/getGitData";
 import { Loader, Error } from "../../components/index";
 import { FilterSection, MinimalisticView } from "../index";
@@ -21,13 +21,14 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
   const [hasMoreContent, setHasMoreContent] = useState(true);
   const lastElementRef = useRef(null);
 
-  const modifyQueryParams = (newParams) => {
-    setQueryParams(newParams);
-    setPage(1);
-    setData([]);
-    setFilteredData([]);
-    setHasMoreContent(true);
-  };
+  const marginLeft = useBreakpointValue({ base: "1%", md: "31%", lg: "19%" });
+  const paddingMainComponent = useBreakpointValue({
+    base: "2",
+    md: "10",
+    lg: "6",
+  });
+
+ 
 
   const getAlertsData = async (currentPage) => {
     try {
@@ -79,7 +80,9 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
       );
       setFilteredData(currData);
     } else {
-      setFilteredData(data);
+      if (data.length > 0) {
+        setFilteredData(data);
+      }
     }
   };
 
@@ -127,7 +130,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
   }, [observerCallback]);
 
   return (
-    <Box p={2} mt={"20px"} >
+    <Box   mt={"20px"} ml={marginLeft} p={paddingMainComponent}>
       <Grid templateRows="auto 1fr" gap={3}>
         <GridItem
           height={"30px"}
@@ -142,7 +145,7 @@ export const MainBox = ({ REPO_NAME, isToggled }) => {
           mb={{ base: "10px", md: "15px" }}
         >
           <FilterSection
-            modifyQueryParams={modifyQueryParams}
+            setQueryParams={setQueryParams}
             filterResultsBasedOnSearchQuery={filterResultsBasedOnSearchQuery}
           />
         </GridItem>

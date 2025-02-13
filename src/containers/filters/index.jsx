@@ -89,7 +89,9 @@ export const Filters = ({ filters, setFilters, filterResults }) => {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button background={theme.colors.primary.main} color={'white'} onClick={handleApplyChanges} _hover={{ bg: theme.colors.primary.dark }}>
+            <Button background={theme.colors.primary.main} color={'white'}
+             onClick={handleApplyChanges}
+              _hover={{ bg: theme.colors.primary.dark }}>
               Apply
             </Button>
           </DrawerFooter>
