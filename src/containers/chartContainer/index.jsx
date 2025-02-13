@@ -6,6 +6,7 @@ import {
   ScatterChartComponent,
   LineChartComponent,
   FunnelChartComponent,
+  AreaChartComponent,
 } from "../../components/charts";
 
 export const ChartContainer = () => {
@@ -125,7 +126,8 @@ export const ChartContainer = () => {
         />
       </Box>
       <Box border="1px solid #ccc" borderRadius="md" p={3}>
-        <LineChartComponent data={lineChartData} height={260} width={'100%'} />
+        {/* <LineChartComponent data={lineChartData} height={260} width={'100%'} /> */}
+        <AreaChartComponent height={300} width={'100%'}/>
       </Box>
       <Box border="1px solid #ccc" borderRadius="md" p={2}>
         {/* <ScatterChartComponent height={260} width={'100%'} /> */}

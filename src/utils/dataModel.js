@@ -415,3 +415,38 @@ export const mapToFunnelChartData = (
 
   return data.reverse();
 };
+
+export const mapToAreaChartData = (alerts, topRepoCount) => {
+  const repoAlertCounts = {};
+
+  alerts.forEach((alert) => {
+    const repoName = alert.repository.name;
+    if (!repoAlertCounts[repoName]) {
+      repoAlertCounts[repoName] = 0;
+    }
+    repoAlertCounts[repoName] += 1;
+  });
+
+  const sortedRepos = Object.entries(repoAlertCounts)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, topRepoCount)
+    .map(([name]) => name);
+
+  const allMonths = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  const data = allMonths.map((month) => {
+    const monthData = { name: month };
+    sortedRepos.forEach((repo) => {
+      monthData[repo] = alerts.filter((alert) => {
+        const alertMonth = new Date(alert.created_at).toLocaleString("default", { month: "short" });
+        return alert.repository.name === repo && alertMonth === month;
+      }).length;
+    });
+    return monthData;
+  });
+
+  return data;
+};
