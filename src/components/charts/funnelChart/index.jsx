@@ -606,6 +606,7 @@ export const FunnelChartComponent = ({ height, width }) => {
     },
   ];
     const [selectedYear, setSelectedYear] = useState(null);
+    const [timeparam, setTimeparam] = useState("created_at");
     const currentYear = new Date().getFullYear();
     const yearOptions = Array.from({ length: 4 }, (_, i) => currentYear - 2 - i);
     const handleOptionChange = (e) => {
@@ -618,22 +619,39 @@ export const FunnelChartComponent = ({ height, width }) => {
           setPrevDays((currentYear - parseInt(value)) * 365);
         }
       };
-    const data = mapToFunnelChartData(alerts, prevDays, "created_at", selectedYear);
+    const data = mapToFunnelChartData(alerts, prevDays, timeparam, selectedYear);
 //   console.log("funnel data", data);
 
   return (
     <Box p={4} borderRadius="md" boxShadow="md">
       <Text fontSize="lg" fontWeight="bold">Alerts Timeline</Text>
       <Flex justifyContent="space-between" alignItems="center" mb={1}>
-        <Flex gap={2} width={"78%"} alignItems={"center"}>
-          <Select
-            value={selectedYear || "current"}
-            onChange={handleOptionChange}
-            width="32%"
+        <Flex gap={2} width={"100%"} alignItems={"center"}>
+        <Select
+            value={timeparam || "created_at"}
+            onChange={(e) => setTimeparam(e.target.value)}
+            width="33%"
             bg="white"
             borderRadius="md"
             boxShadow="sm"
           >
+            <option disabled>----Based on----</option>
+            <option value="created_at">Created time</option>
+            <option value="updated_at">Updated time</option>
+            <option value="dismissed_at">Dismissed time</option>
+            <option value="fixed_at">Fixed time</option>
+
+
+          </Select>
+          <Select
+            value={selectedYear || "current"}
+            onChange={handleOptionChange}
+            width="25%"
+            bg="white"
+            borderRadius="md"
+            boxShadow="sm"
+          >
+            <option disabled>---Select the year---</option>
             <option value="current">Current Year</option>
             {yearOptions.map(year => (
               <option key={year} value={year}>{year}</option>
@@ -645,12 +663,13 @@ export const FunnelChartComponent = ({ height, width }) => {
               setPrevDays(e.target.value);
               if (e.target.value !== "365") setSelectedYear(null);
             }}
-            width="32%"
+            width="30%"
             bg="white"
             borderRadius="md"
             boxShadow="sm"
             isDisabled={selectedYear !== null}
           >
+            <option disabled>--select timeline--</option>
             <option value="7">Last 7 Days</option>
             <option value="28">Last 28 Days</option>
             <option value="90">Last 3 Months</option>
